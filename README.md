@@ -13,3 +13,4 @@ My fourth attempt at creating a functional Tetris game! It proved to be the most
 
   - Improve the styling, as it's not the most visually appealing at the moment :).
   - Investigate the issue where a full column is filled unexpectedly after playing for a while. Check the test function for more details.
+  - Remaking the bakcend with Bun instead of Node.
