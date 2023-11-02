@@ -12,5 +12,5 @@ My fourth attempt at creating a functional Tetris game! It proved to be the most
 ## To-Do List:
 
   - Improve the styling, as it's not the most visually appealing at the moment :).
-  - Investigate the issue where a full column is filled unexpectedly after playing for a while. Check the test function for more details.
+  - Investigate the issue where a full column is filled unexpectedly after playing for a while. Check the `test` function in the test folder for more details.
   - Rewriting the backend with Bun instead of Node.
