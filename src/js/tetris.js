@@ -5,7 +5,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
 // global variables
-let board, game, piece, color, block_size, currentIndexLS;
+let board, game, piece, color, block_size;
 
 // dimentions
 const cols = 10;
