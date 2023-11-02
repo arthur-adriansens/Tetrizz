@@ -1,0 +1,54 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Tetris</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+
+    <body>
+        <div class="left">
+            <h2>public highscores</h2>
+
+            <ol id="publicScores">
+                <li style="list-style: none;"><i>It seems like you're first!</i></li>
+                <!-- {{#each scores}}
+                    <li><b>{{this.username}}</b>: {{ this.highscore }}</li>
+                {{/each}} -->
+            </ol>
+
+            <input id="username" placeholder="Fill in your username please!" required />
+        </div>
+
+        <div id="game">
+            <div id="canvas">
+                <canvas height="585" width="390" tabindex="1" class="over"></canvas>
+                <p class="TRscore">score: <span id="score">0</span></p>
+            </div>
+
+            <div id="game-over">
+                <h2>Game Over</h2>
+                <p>score: <span id="score">0</span></p>
+            </div>
+        </div>
+
+        <div class="right">
+            <h2>personal highscores</h2>
+
+            <ol id="personalScores">
+                <li style="list-style: none;"><i>It seems like you haven't played yet!</i></li>
+            </ol>
+            <button onclick="window.localStorage.clear()">reset</button>
+        </div>
+
+        <!-- <div class="options" onclick="addOptions();"> -->
+        <!-- <img src="settings.svg" height="45px" width="auto" /> -->
+        <!-- </div> -->
+
+        <script src="tetris.js"></script>
+        <!-- <script src="keys.js"></script> -->
+        <!-- <script src="pieces.js"></script> -->
+    </body>
+</html>
