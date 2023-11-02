@@ -5,8 +5,7 @@ const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
 
 // global variables
-let board, game, piece, color, block_size;
-let test = [];
+let board, game, piece, color, block_size, currentIndexLS;
 
 // dimentions
 const cols = 10;
@@ -32,7 +31,13 @@ let startScreen = false;
 // local highscores
 const scoresOL = document.querySelector("#personalScores");
 
-function loadScores() {
+function loadScores(clear = false) {
+    if (clear) {
+        scoresOL.innerHTML = "<li style='list-style: none;'><i>It seems like you haven't played yet!</i></li>";
+        window.localStorage.clear();
+        return;
+    }
+
     let scores = window.localStorage.getItem("scores");
     if (!scores) return []; // if 0 or undefined
 
@@ -55,515 +60,27 @@ function loadScores() {
     return sortedScores;
 }
 
-function newScore(newScore) {
+function newScore(newScore, final = false) {
     if (!newScore) return;
 
-    document.querySelectorAll("#score").forEach((x) => (x.innerHTML = newScore));
+    document.querySelector("#score").innerHTML = newScore;
+    if (!final) return;
+
+    document.querySelector("#finalScore").innerHTML = newScore;
 
     let scores = loadScores();
     scores.push(newScore);
-
     window.localStorage.setItem("scores", scores);
     loadScores();
-}
-
-function runTest(queries) {
-    for (let q of queries) {
-        if (q == "piece.rotate()") {
-            piece.rotate();
-        }
-
-        if (q.includes("piece.move(")) {
-            q = q.replace("piece.move(", "");
-            q = q.replace(")", "");
-            piece.move(q);
-        }
-
-        if (q == "debugger") {
-            console.clear();
-            console.table(board);
-            // debugger;
-            continue;
-        }
-    }
 }
 
 window.addEventListener("resize", () => dimentions(true));
 
 window.onload = () => {
     loadScores();
-    // newScore(400);
 
     game = new Game();
     piece = new Piece();
-
-    test2 = [
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "debugger",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;1)",
-        "piece.rotate()",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(x;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(x;-1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(x;-1)",
-        "piece.rotate()",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-        "piece.move(y;1)",
-    ];
-
-    runTest(test2);
 };
 
 class Game {
@@ -701,9 +218,10 @@ class Game {
 
     end() {
         this.stop = true;
+        newScore(this.score, true);
         document.querySelector("#game").classList.toggle("over");
+
         console.log("game over");
-        console.log(test);
 
         // sent new highscore to server
         const username = document.querySelector("#username").value;
@@ -798,13 +316,9 @@ class Piece {
 
         // check for full rows
         game.checkRows();
-
-        // console.clear();
-        // console.table(board);
     }
 
     rotate() {
-        test.push(`piece.rotate()`);
         // todo things can still rotate through each other!
 
         // O shape
@@ -858,8 +372,6 @@ class Piece {
     }
 
     move(query) {
-        test.push(`piece.move(${query})`);
-
         //query = (x;-1), (x;1), (y;-1)
         let [axis, extra] = query.split(";");
         if (!axis || !extra) return false;
@@ -900,40 +412,3 @@ class Piece {
         }, 1000);
     }
 }
-
-// function addOptions() {
-// if (!showOptions) {
-//     game.emptyBoard(true);
-//     showOptions = !showOptions;
-//     return;
-// }
-
-// showOptions = !showOptions;
-
-// // draw y values
-// ctx.textAlign = "left";
-// ctx.fillStyle = "red";
-// for (let i = 0; i < rows; i++) {
-//     ctx.fillText(i, 3, block_size * i + block_size / 2); //context.fillText(text,x,y,maxWidth);
-// }
-// ctx.fillStyle = "red";
-
-// // draw x values
-// ctx.textAlign = "top";
-// ctx.fillStyle = "blue";
-// for (let i = 0; i < cols; i++) {
-//     ctx.fillText(i, block_size * i + block_size / 2, 12);
-// }
-// ctx.fillStyle = "red";
-// }
-
-// }
-// ctx.fillStyle = "red";
-// }
-// }
-
-// }
-// ctx.fillStyle = "red";
-// }
-ctx.fillStyle = "red";
-// }
