@@ -1,5 +1,5 @@
 {
-    "name": "Tetris",
+    "name": "tetris",
     "version": "2.0.0",
     "description": "A Node app with SQLite database, fastify and handlebars.",
     "main": "server.js",
@@ -23,5 +23,9 @@
         "url": "https://github.com/arthur-adriansens/Tetris"
     },
     "license_path": "LICENSE",
-    "keywords": ["node", "glitch", "sqlite"]
+    "keywords": [
+        "node",
+        "glitch",
+        "sqlite"
+    ]
 }
