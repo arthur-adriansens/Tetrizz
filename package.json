@@ -1,0 +1,27 @@
+{
+    "name": "Tetris",
+    "version": "2.0.0",
+    "description": "A Node app with SQLite database, fastify and handlebars.",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "build": "npm run grunt"
+    },
+    "dependencies": {
+        "fastify": "^4.24.3",
+        "handlebars": "^4.7.8",
+        "@fastify/view": "^8.2.0",
+        "@fastify/static": "^6.12.0",
+        "@fastify/formbody": "^7.4.0",
+        "sqlite": "^5.1.1",
+        "sqlite3": "^5.1.6"
+    },
+    "engines": {
+        "node": "14.x"
+    },
+    "repository": {
+        "url": "https://github.com/arthur-adriansens/Tetris"
+    },
+    "license_path": "LICENSE",
+    "keywords": ["node", "glitch", "sqlite"]
+}

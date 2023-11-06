@@ -130,4 +130,5 @@ out
 
 # custom
 .git
-dist
+public dist/
+.node-gyp
