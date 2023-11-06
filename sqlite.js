@@ -1,5 +1,4 @@
 /** @format */
-
 const fs = require("fs");
 const dbFile = "./.data/chat.db";
 const sqlite3 = require("sqlite3").verbose();
