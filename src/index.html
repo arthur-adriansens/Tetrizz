@@ -30,7 +30,7 @@
 
             <div id="game-over">
                 <h2>Game Over</h2>
-                <p>score: <span id="score">0</span></p>
+                <p>score: <span id="finalScore">0</span></p>
             </div>
         </div>
 
@@ -40,15 +40,14 @@
             <ol id="personalScores">
                 <li style="list-style: none;"><i>It seems like you haven't played yet!</i></li>
             </ol>
-            <button onclick="loadScores(true)">reset</button>
+            <button onclick="game.load_scores(true)">reset</button>
         </div>
 
         <!-- <div class="options" onclick="addOptions();"> -->
         <!-- <img src="settings.svg" height="45px" width="auto" /> -->
         <!-- </div> -->
 
-        <script src="tetris.js"></script>
-        <!-- <script src="keys.js"></script> -->
-        <!-- <script src="pieces.js"></script> -->
+        <script src="./js/tetris.js"></script>
+        <script src="./js/piece.js"></script>
     </body>
 </html>
