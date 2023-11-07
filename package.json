@@ -22,7 +22,7 @@
     "repository": {
         "url": "https://github.com/arthur-adriansens/Tetris"
     },
-    "license_path": "LICENSE",
+    "license": "SEE LICENSE IN ./LICENSE",
     "keywords": [
         "node",
         "glitch",
