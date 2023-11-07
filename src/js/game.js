@@ -6,41 +6,50 @@ const ctx = canvas.getContext("2d");
 const cols = 10;
 const rows = 15;
 const colors = ["LightSkyBlue", "DeepSkyBlue", "LightSalmon", "Gold", "DarkSeaGreen", "Plum", "Tomato"];
-const scoresOL = document.querySelector("#personalScores");
+const scoresHTML = document.querySelector("#personalScores");
+const usernameHTML = document.querySelector("#username");
 
 let board, game, piece, color, block_size;
+let username = window.localStorage.getItem("username");
 let startScreen = false;
 
 ctx.strokeStyle = "gray";
 ctx.lineWidth = 1;
 
 window.onload = () => {
+    change_dimensions();
+    usernameHTML.value = username ? username : "";
+
     game = new Game();
     piece = new Piece();
 };
-window.addEventListener("resize", () => game.change_dimensions(true));
+window.addEventListener("resize", () => change_dimensions(true));
+
+usernameHTML.addEventListener("input", () => {
+    username = usernameHTML.value;
+    window.localStorage.setItem("username", username);
+});
+
+function change_dimensions(redraw = false) {
+    canvas.height = (document.querySelector("#game").clientHeight - 4) * 0.95;
+    block_size = canvas.height / rows;
+    canvas.width = block_size * cols;
+
+    if (redraw) game.redraw();
+}
 
 class Game {
     constructor() {
         this.score = 0;
         this.stop = false;
 
-        this.change_dimensions();
         board = this.redraw(true);
         this.load_scores();
     }
 
-    change_dimensions(redraw = false) {
-        canvas.height = (document.querySelector("#game").clientHeight - 4) * 0.95;
-        block_size = canvas.height / rows;
-        canvas.width = block_size * cols;
-
-        if (redraw) this.redraw();
-    }
-
     load_scores(clear = false) {
         if (clear) {
-            scoresOL.innerHTML = "<li style='list-style: none;'><i>It seems like you haven't played yet!</i></li>";
+            scoresHTML.innerHTML = "<li style='list-style: none;'><i>It seems like you haven't played yet!</i></li>";
             window.localStorage.clear();
             return;
         }
@@ -59,9 +68,9 @@ class Game {
 
         window.localStorage.setItem("scores", sortedScores);
 
-        scoresOL.innerHTML = "";
+        scoresHTML.innerHTML = "";
         for (let score of sortedScores) {
-            scoresOL.innerHTML += `<li>${score}</li>`;
+            scoresHTML.innerHTML += `<li>${score}</li>`;
         }
 
         return sortedScores;
@@ -206,7 +215,6 @@ class Game {
         console.log("game over");
 
         // sent new highscore to server
-        const username = document.querySelector("#username").value;
         if (this.score == 0 || !username) return;
 
         const url = "https://sjh-tetris.glitch.me/newScore";
