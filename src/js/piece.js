@@ -47,8 +47,8 @@ class Piece {
 
     placeBlock(newBlock = false, clearTrail = false, shape = this.shape) {
         // shape
-        // this.piece = newBlock ? Math.floor(Math.random() * shapeTypes.length) : this.piece;
-        this.piece = 6;
+        this.piece = newBlock ? Math.floor(Math.random() * shapeTypes.length) : this.piece;
+        // this.piece = 6;
         this.shape = newBlock ? shapes[shapeTypes[this.piece]] : shape;
 
         // color
@@ -83,8 +83,6 @@ class Piece {
         if (this.piece == 3) return;
 
         // long I shape
-        let oldShape = this.shape;
-
         if (this.piece == 0) {
             this.rotated = this.rotated ? !this.rotated : true;
 
