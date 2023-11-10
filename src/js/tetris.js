@@ -33,7 +33,7 @@ startButton.onclick = () => {
     startButton.disabled = true;
     piece = new Piece();
 
-    soundtrack.currentTime = 0;
+    soundtrack.currentTime = endSound.currentTime = 0;
     soundtrack.play();
 };
 
@@ -178,7 +178,6 @@ class Game {
 
         // sound
         soundtrack.pause();
-        soundtrack.currentTime = 0;
         endSound.play();
 
         // reset button
