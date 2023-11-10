@@ -8,9 +8,13 @@ const rows = 15;
 const colors = ["LightSkyBlue", "DeepSkyBlue", "LightSalmon", "Gold", "DarkSeaGreen", "Plum", "Tomato"];
 const scoresHTML = document.querySelector("#personalScores");
 const usernameHTML = document.querySelector("#username");
-const startButton = document.querySelector("#start");
 
-let board, game, piece, color, block_size, audio;
+const startButton = document.querySelector("#start");
+const soundtrack = new Audio("./assets/Tetris Soundtrack.mp3");
+soundtrack.loop = true;
+const endSound = new Audio("./assets/success.wav");
+
+let board, game, piece, color, block_size;
 let username = window.localStorage.getItem("username");
 let startScreen = false;
 
@@ -29,10 +33,8 @@ startButton.onclick = () => {
     startButton.disabled = true;
     piece = new Piece();
 
-    audio ? (audio.pause(), (audio.currentTime = 0)) : 0;
-
-    audio = new Audio("./files/Tetris Soundtrack.mp3");
-    audio.play();
+    soundtrack.currentTime = 0;
+    soundtrack.play();
 };
 
 window.addEventListener("resize", () => change_dimensions(true));
@@ -175,10 +177,9 @@ class Game {
         console.log("game over");
 
         // sound
-        audio.pause();
-        audio.currentTime = 0;
-        audio = new Audio("files/success.wav");
-        audio.play();
+        soundtrack.pause();
+        soundtrack.currentTime = 0;
+        endSound.play();
 
         // reset button
         startButton.disabled = false;
