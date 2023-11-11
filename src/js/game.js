@@ -152,7 +152,7 @@ class Game {
 
     validMove(move) {
         // check if on bottom row
-        if (board[rows - 1].includes(1)  && move == "y;1") {
+        if (board[rows - 1].includes(1)) {
             piece.disable();
             piece = !this.stop ? new Piece() : 0;
             return false;
