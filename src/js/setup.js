@@ -156,4 +156,3 @@ function upload_highscore(score) {
         .then((data) => console.log("Response data:", data))
         .catch((error) => console.error("Error:", error));
 }
-s;
