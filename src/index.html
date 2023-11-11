@@ -44,14 +44,21 @@
             <ol id="personalScores">
                 <li style="list-style: none;"><i>It seems like you haven't played yet!</i></li>
             </ol>
-            <button onclick="game.load_scores(true)">reset</button>
+            <button id="reset">reset</button>
+        </div>
+
+        <div class="options">
+            <img src="./assets/icons/effects-1.svg" id="effects" height="20px" width="auto" data-state="1" data-max="1" />
+            <img src="./assets/icons/music-1.svg" id="track" height="20px" width="auto" data-state="1" data-max="1" />
+            <img src="./assets/icons/volume-1.svg" id="volume" height="20px" width="auto" data-state="1" data-max="2" />
         </div>
 
         <!-- <div class="options" onclick="addOptions();"> -->
         <!-- <img src="settings.svg" height="45px" width="auto" /> -->
         <!-- </div> -->
 
-        <script src="./tetris.js"></script>
-        <script src="./pieces.js"></script>
+        <script src="./js/setup.js"></script>
+        <script src="./js/tetris.js"></script>
+        <script src="./js/pieces.js"></script>
     </body>
 </html>

@@ -41,6 +41,8 @@ class Piece {
             return;
         }
 
+        dropSound.currentTime = 0;
+        dropSound.play();
         this.placeBlock();
         game.redraw();
     }
@@ -101,6 +103,9 @@ class Piece {
             }
 
             this.placeBlock();
+
+            rotateSound.currentTime = 0;
+            rotateSound.play();
             return;
         }
 
@@ -116,7 +121,9 @@ class Piece {
         this.shape = newShape;
 
         // redraw
+        rotateSound.currentTime = 0;
         this.placeBlock();
+        rotateSound.play();
     }
 
     drop() {
@@ -157,14 +164,15 @@ class Piece {
     }
 
     lowerAutomaticaly() {
-        // lower block every 1000ms (= 1s)
+        // lower block every 750ms
         this.interval = setInterval(() => {
             if (game.stop) {
                 clearInterval(this.interval);
+                this.downInterval ? clearInterval(this.downInterval) : 0;
                 return;
             }
 
             this.move("y;1");
-        }, 1000);
+        }, 750);
     }
 }

@@ -8,16 +8,13 @@
     "editor.fontSize": 15,
     "better-comments.multilineComments": true,
     "workbench.colorTheme": "One Dark Pro",
-    "[html]": {
+    "[html, javascript, json, css]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "[javascript]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "[json]": {
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-    "colorInfo.fields": ["rgb", "hex"],
+    "colorInfo.fields": [
+        "rgb",
+        "hex"
+    ],
     "[astro]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
@@ -27,7 +24,6 @@
     "javascript.format.insertSpaceAfterConstructor": true,
     "editor.formatOnSave": true,
     "terminal.integrated.defaultProfile.windows": "Git Bash",
-
     "prettier.tabWidth": 4,
     "prettier.insertPragma": true,
     "prettier.printWidth": 150,
