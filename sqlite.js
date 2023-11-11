@@ -6,7 +6,6 @@ const sqlite3 = require("sqlite3").verbose();
 const dbWrapper = require("sqlite");
 let db;
 
-//SQLite wrapper for async / await connections https://www.npmjs.com/package/sqlite
 dbWrapper
     .open({
         filename: dbFile,
@@ -65,7 +64,6 @@ module.exports = {
 
             if (scores.length >= 20) {
                 console.log("removing...");
-                debugger;
                 await db.run("DELETE FROM Scores WHERE highscore = (SELECT MIN(highscore) FROM Scores)");
             }
 
@@ -75,5 +73,15 @@ module.exports = {
         }
 
         return success.changes > 0;
+    },
+    removeUser: async (user) => {
+        let success = false;
+
+        try {
+            success = await db.run("DELETE FROM Scores WHERE username = ?;", [user]);
+            return success.changes > 0;
+        } catch (err) {
+            console.error(err);
+        }
     },
 };
