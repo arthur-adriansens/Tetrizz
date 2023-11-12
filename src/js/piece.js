@@ -79,8 +79,6 @@ class Piece {
     }
 
     rotate() {
-        // todo things can still rotate through each other!
-
         // O shape
         if (this.piece == 3) return;
 
