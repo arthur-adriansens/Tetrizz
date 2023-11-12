@@ -1,8 +1,10 @@
 /** @format */
 
 // global variables
-const canvas = document.querySelector("canvas");
+const canvas = document.querySelector("#gameCanvas");
+const nextBlockCanvas = document.querySelector("#nextBlock");
 const ctx = canvas.getContext("2d");
+const nextBlockCtx = nextBlockCanvas.getContext("2d");
 const cols = 10;
 const rows = 16;
 const colors = ["LightSkyBlue", "DeepSkyBlue", "LightSalmon", "Gold", "DarkSeaGreen", "Plum", "Tomato"];

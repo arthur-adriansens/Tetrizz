@@ -10,6 +10,7 @@ class Game {
         this.stop = this.pause = false;
 
         board = this.redraw(true);
+        this.drawNextBlock();
         local_scores();
         new_score(this.sore);
     }
@@ -49,9 +50,42 @@ class Game {
         });
     }
 
-    drawBlock(col, row, value) {
+    drawBlock(col, row, value, context = ctx) {
         if (value == 0) return;
-        ctx.fillRect(row * block_size + 1, col * block_size + 1, block_size - 2, block_size - 2);
+        context.fillRect(row * block_size + 1, col * block_size + 1, block_size - 2, block_size - 2);
+    }
+
+    drawNextBlock(shape, piece) {
+        let ctx2 = nextBlockCtx;
+        let canvas2 = nextBlockCanvas;
+
+        canvas2.width = canvas2.height = block_size * 5;
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+        // draw grid
+        ctx2.strokeStyle = "gray";
+        ctx2.lineWidth = 1;
+
+        ctx2.beginPath(false);
+
+        for (let i = 1; i < 5; i++) {
+            ctx2.moveTo(block_size * i, 0);
+            ctx2.lineTo(block_size * i, canvas2.height);
+
+            ctx2.moveTo(0, block_size * i);
+            ctx2.lineTo(canvas2.height, block_size * i);
+        }
+
+        ctx2.stroke();
+
+        // draw block
+        ctx2.fillStyle = colors[piece];
+
+        for (let i in shape) {
+            let col = (i % 3) + 1;
+            let row = Math.floor(i / 3) + 1;
+            game.drawBlock(row, col, shape[i], ctx2);
+        }
     }
 
     isClipping(moveRow = 0, moveCol = 0, shape, width) {

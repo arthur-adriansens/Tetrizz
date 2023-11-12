@@ -5,7 +5,6 @@ body,
 #game {
     height: 100%;
     margin-top: 0;
-    overflow: hidden;
 }
 
 body {
@@ -111,4 +110,10 @@ input {
 input:invalid {
     border-color: red;
     background-color: rgb(255, 99, 71, 0.5);
+}
+
+#nextBlock {
+    position: absolute;
+    top: 2.5%;
+    left: 100%;
 }

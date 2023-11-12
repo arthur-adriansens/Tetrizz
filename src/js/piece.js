@@ -9,7 +9,8 @@ const shapes = {
     T: [0, 0, 0, 1, 2, 1, 0, 1, 0],
     Z: [0, 0, 0, 1, 2, 0, 0, 1, 1],
 };
-shapeTypes = Object.keys(shapes);
+const shapeTypes = Object.keys(shapes);
+let nextPiece = Math.floor(Math.random() * shapeTypes.length);
 
 class Piece {
     constructor() {
@@ -49,9 +50,11 @@ class Piece {
 
     placeBlock(newBlock = false, clearTrail = false, shape = this.shape) {
         // shape
-        this.piece = newBlock ? Math.floor(Math.random() * shapeTypes.length) : this.piece;
-        // this.piece = 6;
-        this.shape = newBlock ? shapes[shapeTypes[this.piece]] : shape;
+        if (newBlock) {
+            this.piece = nextPiece;
+            this.shape = shapes[shapeTypes[this.piece]];
+            this.nextBlock();
+        }
 
         // color
         color = ctx.fillStyle = clearTrail ? "white" : colors[this.piece];
@@ -78,6 +81,12 @@ class Piece {
         game.checkRows();
     }
 
+    nextBlock() {
+        nextPiece = Math.floor(Math.random() * shapeTypes.length);
+        this.nextShape = shapes[shapeTypes[nextPiece]];
+        game.drawNextBlock(this.nextShape, nextPiece);
+    }
+
     rotate() {
         // O shape
         if (this.piece == 3) return;
@@ -101,7 +110,6 @@ class Piece {
             }
 
             this.placeBlock();
-
             rotateSound.currentTime = 0;
             rotateSound.play();
             return;
