@@ -4,6 +4,7 @@
     "description": "A Node app with SQLite database, fastify and handlebars.",
     "main": "server.js",
     "scripts": {
+        "setup": "git clone https://github.com/arthur-adriansens/Tetris && npm install",
         "start": "node server.js",
         "build": "grunt && refresh"
     },
