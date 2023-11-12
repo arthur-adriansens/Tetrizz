@@ -29,6 +29,7 @@ window.onload = () => {
 
     change_dimensions();
     usernameHTML.value = username ? username : "";
+    local_scores();
 };
 
 startHTML.onclick = () => {
