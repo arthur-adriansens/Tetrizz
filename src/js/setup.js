@@ -12,11 +12,11 @@ const startHTML = document.querySelector("#start");
 const effectsIcon = document.querySelector("#effects");
 const trackIcon = document.querySelector("#track");
 
-const soundtrack = new Audio("files/music/Tetris Soundtrack.mp3");
-const clearSound = new Audio("files/music/clear.mp3");
-const endSound = new Audio("files/music/success.wav");
-const rotateSound = new Audio("files/music/rotate.mp3");
-const dropSound = new Audio("files/music/drop.mp3");
+const soundtrack = new Audio("./assets/music/Tetris Soundtrack.mp3");
+const clearSound = new Audio("./assets/music/clear.mp3");
+const endSound = new Audio("./assets/music/success.wav");
+const rotateSound = new Audio("./assets/music/rotate.mp3");
+const dropSound = new Audio("./assets/music/drop.mp3");
 const soundOptions = [soundtrack, endSound, clearSound, rotateSound, dropSound];
 const totalVolume = () => document.querySelector("#volume").dataset.state * 0.5;
 
