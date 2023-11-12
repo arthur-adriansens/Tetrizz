@@ -1,94 +1,17 @@
 /** @format */
 
-// setup
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-const cols = 10;
-const rows = 15;
-const colors = ["LightSkyBlue", "DeepSkyBlue", "LightSalmon", "Gold", "DarkSeaGreen", "Plum", "Tomato"];
-const scoresHTML = document.querySelector("#personalScores");
-const usernameHTML = document.querySelector("#username");
-
-let board, game, piece, color, block_size;
-let username = window.localStorage.getItem("username");
-let startScreen = false;
-
-ctx.strokeStyle = "gray";
-ctx.lineWidth = 1;
-
-window.onload = () => {
-    change_dimensions();
-    usernameHTML.value = username ? username : "";
-
-    game = new Game();
-    piece = new Piece();
-};
-window.addEventListener("resize", () => change_dimensions(true));
-
-usernameHTML.addEventListener("input", () => {
-    username = usernameHTML.value;
-    window.localStorage.setItem("username", username);
-});
-
-function change_dimensions(redraw = false) {
-    canvas.height = (document.querySelector("#game").clientHeight - 4) * 0.95;
-    block_size = canvas.height / rows;
-    canvas.width = block_size * cols;
-
-    if (redraw) game.redraw();
-}
-
 class Game {
     constructor() {
+        document.querySelector("#game").classList.remove("over");
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
+
         this.score = 0;
-        this.stop = false;
+        this.stop = this.pause = false;
 
         board = this.redraw(true);
-        this.load_scores();
-    }
-
-    load_scores(clear = false) {
-        if (clear) {
-            scoresHTML.innerHTML = "<li style='list-style: none;'><i>It seems like you haven't played yet!</i></li>";
-            window.localStorage.clear();
-            return;
-        }
-
-        let scores = window.localStorage.getItem("scores");
-        if (!scores) return []; // if 0 or undefined
-
-        let sortedScores = scores
-            .split(",")
-            .slice()
-            .sort((a, b) => b - a);
-
-        if (sortedScores.length >= 10) {
-            sortedScores.splice(10);
-        }
-
-        window.localStorage.setItem("scores", sortedScores);
-
-        scoresHTML.innerHTML = "";
-        for (let score of sortedScores) {
-            scoresHTML.innerHTML += `<li>${score}</li>`;
-        }
-
-        return sortedScores;
-    }
-
-    new_score(newScore, final = false) {
-        if (!newScore) return;
-
-        document.querySelector("#score").innerHTML = newScore;
-        if (!final) return;
-
-        document.querySelector("#finalScore").innerHTML = newScore;
-
-        let scores = this.load_scores();
-        scores.push(newScore);
-        window.localStorage.setItem("scores", scores);
-
-        this.load_scores();
+        local_scores();
+        new_score(this.sore);
     }
 
     redraw(setup = false) {
@@ -140,6 +63,7 @@ class Game {
             let row = Math.floor(i / width) + piece.extraY;
 
             //if out of the board
+            if (row >= rows) continue;
             if (shape[i] != 0 && board[row][col] == undefined) return true;
 
             //if on top of other block
@@ -152,7 +76,7 @@ class Game {
 
     validMove(move) {
         // check if on bottom row
-        if (board[rows - 1].includes(1)) {
+        if (board[rows - 1].includes(1) && move == "y;1") {
             piece.disable();
             piece = !this.stop ? new Piece() : 0;
             return false;
@@ -191,42 +115,50 @@ class Game {
 
     checkRows() {
         let redraw = false;
+        let combo = 0;
 
         board.map((row, i) => {
             if (!row.includes(0) && !row.includes(1) && !row.includes(2)) {
+                combo += redraw ? 1 : 0;
                 redraw = true;
                 this.score += 100;
-                this.new_score(this.score);
 
                 // lower everything (remove row & put new row on top)
+                clearSound.currentTime = 0;
+                clearSound.play();
                 board.splice(i, 1);
                 board.splice(0, 0, new Array(cols).fill(0));
             }
         });
 
+        this.score += 200 * combo;
+        new_score(this.score);
+
         if (redraw) this.redraw();
+    }
+
+    togglePause() {
+        this.pause = !this.pause;
     }
 
     end() {
         this.stop = true;
-        this.new_score(this.score, true);
-        document.querySelector("#game").classList.toggle("over");
+
+        new_score(this.score, true);
+        document.querySelector("#game").classList.add("over");
 
         console.log("game over");
 
+        // sound
+        soundtrack.pause();
+        soundtrack.currentTime = 0;
+        endSound.play();
+
+        // reset button
+        startHTML.disabled = false;
+        startHTML.style.opacity = "1";
+
         // sent new highscore to server
-        if (this.score == 0 || !username) return;
-
-        const url = "https://sjh-tetris.glitch.me/newScore";
-        const data = { user: username, score: this.score };
-
-        fetch(url, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-        })
-            .then((response) => response.json())
-            .then((data) => console.log("Response data:", data))
-            .catch((error) => console.error("Error:", error));
+        upload_highscore(this.score);
     }
 }

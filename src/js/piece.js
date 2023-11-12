@@ -153,8 +153,9 @@ class Piece {
     }
 
     keyPress(e) {
-        if (game.stop) return;
         let key = e.key;
+        key == "Escape" ? game.togglePause() : 0;
+        if (game.stop || game.pause) return;
 
         key == "ArrowUp" ? piece.rotate() : 0;
         key == "ArrowLeft" ? piece.move("x;-1") : 0;
@@ -166,6 +167,8 @@ class Piece {
     lowerAutomaticaly() {
         // lower block every 750ms
         this.interval = setInterval(() => {
+            if (game.pause) return;
+
             if (game.stop) {
                 clearInterval(this.interval);
                 this.downInterval ? clearInterval(this.downInterval) : 0;

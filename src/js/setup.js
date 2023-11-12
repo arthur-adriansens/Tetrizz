@@ -22,9 +22,6 @@ let board, game, piece, color, block_size;
 let username = window.localStorage.getItem("username");
 let startScreen = false;
 
-ctx.strokeStyle = "gray";
-ctx.lineWidth = 1;
-
 // event listeners
 window.onload = () => {
     soundtrack.loop = true;
@@ -32,10 +29,11 @@ window.onload = () => {
 
     change_dimensions();
     usernameHTML.value = username ? username : "";
-    game = new Game();
 };
 
 startHTML.onclick = () => {
+    game = new Game();
+
     startHTML.style.opacity = "0";
     startHTML.disabled = true;
     piece = new Piece();
@@ -127,7 +125,7 @@ const local_scores = (clear = false) => {
 };
 
 function new_score(newScore, final = false) {
-    if (!newScore) return;
+    newScore = !newScore ? 0 : newScore;
 
     document.querySelector("#score").innerHTML = newScore;
     if (!final) return;
