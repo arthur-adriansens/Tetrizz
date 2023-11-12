@@ -12,4 +12,3 @@ My fourth attempt at creating a functional Tetris game! It proved to be the most
 ## To-Do List:
 
   - Improve the styling, as it's not the most visually appealing at the moment :).
-  - Rewriting the backend with Bun instead of Node.
