@@ -125,10 +125,8 @@ const local_scores = (clear = false) => {
 };
 
 function new_score(newScore, final = false) {
-    newScore = !newScore ? 0 : newScore;
-
     document.querySelector("#score").innerHTML = newScore;
-    if (!final) return;
+    if (!final || !newScore) return;
 
     document.querySelector("#finalScore").innerHTML = newScore;
 
