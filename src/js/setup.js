@@ -9,12 +9,14 @@ const colors = ["LightSkyBlue", "DeepSkyBlue", "LightSalmon", "Gold", "DarkSeaGr
 const scoresHTML = document.querySelector("#personalScores");
 const usernameHTML = document.querySelector("#username");
 const startHTML = document.querySelector("#start");
+const effectsIcon = document.querySelector("#effects");
+const trackIcon = document.querySelector("#track");
 
-const soundtrack = new Audio("./assets/music/Tetris Soundtrack.mp3");
-const clearSound = new Audio("./assets/music/clear.mp3");
-const endSound = new Audio("./assets/music/success.wav");
-const rotateSound = new Audio("./assets/music/rotate.mp3");
-const dropSound = new Audio("./assets/music/drop.mp3");
+const soundtrack = new Audio("files/music/Tetris Soundtrack.mp3");
+const clearSound = new Audio("files/music/clear.mp3");
+const endSound = new Audio("files/music/success.wav");
+const rotateSound = new Audio("files/music/rotate.mp3");
+const dropSound = new Audio("files/music/drop.mp3");
 const soundOptions = [soundtrack, endSound, clearSound, rotateSound, dropSound];
 const totalVolume = () => document.querySelector("#volume").dataset.state * 0.5;
 
@@ -29,7 +31,6 @@ window.onload = () => {
 
     change_dimensions();
     usernameHTML.value = username ? username : "";
-    local_scores();
 };
 
 startHTML.onclick = () => {
@@ -79,12 +80,20 @@ function toggleIcon(click) {
     icon.dataset.state = old_state == icon.dataset.max ? 0 : old_state + 1;
     icon.src = icon.src.replace(`${old_state}.svg`, `${icon.dataset.state}.svg`);
     iconChangeVolume(icon.id != "volume" ? icon : 0);
+
+    if (totalVolume() == 0) {
+        effectsIcon.src = "files/icons/effects-0.svg";
+        trackIcon.src = "files/icons/music-0.svg";
+    } else {
+        effectsIcon.src = `files/icons/effects-${effectsIcon.dataset.state}.svg`;
+        trackIcon.src = `files/icons/music-${trackIcon.dataset.state}.svg`;
+    }
 }
 
 function iconChangeVolume(icon) {
     let changes = Array.from(soundOptions);
-    let effectsLevel = document.querySelector("#effects").dataset.state;
-    let trackLevel = document.querySelector("#track").dataset.state;
+    let effectsLevel = effectsIcon.dataset.state;
+    let trackLevel = trackIcon.dataset.state;
 
     icon.src?.includes("effects") ? changes.splice(0, 2) : 0;
     icon.src?.includes("music") ? changes.splice(2) : 0;
@@ -126,8 +135,10 @@ const local_scores = (clear = false) => {
 };
 
 function new_score(newScore, final = false) {
+    newScore = !newScore ? 0 : newScore;
+
     document.querySelector("#score").innerHTML = newScore;
-    if (!final || !newScore) return;
+    if (!final) return;
 
     document.querySelector("#finalScore").innerHTML = newScore;
 
