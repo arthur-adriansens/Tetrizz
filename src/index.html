@@ -7,6 +7,7 @@
         <title>Tetris</title>
         <link rel="stylesheet" href="style.css" />
         <link rel="icon" href="https://cdn.glitch.global/a2328394-6a2f-46f0-9a34-e8b074480846/favicon.ico?v=1699797335084" type="image/x-icon" />
+        <script async="1" type="text/javascript" src="./js/alpina.js"></script>
     </head>
 
     <body>
@@ -15,7 +16,7 @@
 
             <ol id="publicScores"></ol>
 
-            <input id="username" placeholder="Fill in your username please!" required />
+            <input id="username" autocomplete="given-name" placeholder="Fill in your username please!" required />
         </div>
 
         <div id="game">
@@ -40,7 +41,9 @@
             <h2>personal highscores</h2>
 
             <ol id="personalScores">
-                <li style="list-style: none;"><i>It seems like you haven't played yet!</i></li>
+                <li style="list-style: none">
+                    <i>It seems like you haven't played yet!</i>
+                </li>
             </ol>
             <button id="reset">reset</button>
         </div>
@@ -51,23 +54,8 @@
             <img src="./assets/icons/volume-1.svg" id="volume" height="20px" width="auto" data-state="1" data-max="2" />
         </div>
 
-        <!-- <div class="options" onclick="addOptions();"> -->
-        <!-- <img src="settings.svg" height="45px" width="auto" /> -->
-        <!-- </div> -->
-
         <script src="./js/setup.js"></script>
         <script src="./js/tetris.js"></script>
         <script src="./js/pieces.js"></script>
-
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XFR11CZ1ZZ"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-
-            gtag("config", "G-XFR11CZ1ZZ");
-        </script>
     </body>
 </html>

@@ -41,6 +41,12 @@ module.exports = function (grunt) {
                 src: "index.html",
                 dest: "public/",
             },
+            alpina: {
+                expand: true,
+                cwd: "src/js/",
+                src: "alpina.js",
+                dest: "public/",
+            },
         },
         rename: {
             main: {
@@ -78,6 +84,10 @@ module.exports = function (grunt) {
                     {
                         from: '<ol id="publicScores"></ol>',
                         to: `<ol id="newScores">{{#if scores}}{{#each scores}}<li><b>{{this.username}}</b>: {{this.highscore}}</li>{{/each}}{{else}}<li style="list-style: none;"><i>It seems like you're first!</i></li>{{/if}}</ol>`,
+                    },
+                    {
+                        from: 'src="./js/alpina.js"',
+                        to: 'src="alpina.js"',
                     },
                 ],
             },
