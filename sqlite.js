@@ -1,6 +1,5 @@
 /** @format */
 
-const fs = require("fs");
 const dbFile = "./.data/chat.db";
 const sqlite3 = require("sqlite3").verbose();
 const dbWrapper = require("sqlite");
@@ -22,7 +21,7 @@ dbWrapper
                 await db.run("CREATE TABLE Scores (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, highscore INTEGER);");
             }
 
-            console.log(await db.all("SELECT * from Scores ORDER BY highscore DESC;"));
+            console.log(await module.exports.getScores());
         } catch (err) {
             console.error(err);
         }
@@ -30,44 +29,29 @@ dbWrapper
 
 module.exports = {
     // Get the scores in the database
-    getScores: async () => {
+    getScores: async (user) => {
         try {
-            return await db.all("SELECT * from Scores ORDER BY highscore DESC;");
+            if (user) {
+                return await db.all("SELECT * from Scores WHERE username = ?;", [user]);
+            }
+
+            return await db.all("SELECT * from Scores ORDER BY highscore DESC LIMIT 10;");
         } catch (err) {
             console.error(err);
         }
     },
 
-    // Add new score (PUT)
+    // Post (add) a new score
     addScore: async (user, newScore) => {
         let success = false;
 
         try {
-            const scores = await module.exports.getScores();
-
             // check for previous records + check if bigger
-            for (let score of scores) {
-                if (score.username == user && score.highscore >= newScore) {
-                    return success;
-                }
-
-                if (score.username == user) {
-                    await db.run("DELETE FROM Scores WHERE id = ?", [score.id]);
-                    break;
-                }
-            }
+            const score = await module.exports.getScores(user);
+            if (score.highscore >= newScore) return success;
 
             // add the score
-            let last_score = scores[scores.length - 1].highscore;
-
-            if (newScore <= last_score && scores.length >= 20) return success;
-
-            if (scores.length >= 20) {
-                console.log("removing...");
-                await db.run("DELETE FROM Scores WHERE highscore = (SELECT MIN(highscore) FROM Scores)");
-            }
-
-            success = await db.run("INSERT INTO Scores (username, highscore) VALUES (?, ?);", [user, newScore]);
+            success = await db.run("UPDATE Scores SET highscore = ? WHERE id = ?", [newScore, score.id]);
         } catch (err) {
             console.error(err);
         }

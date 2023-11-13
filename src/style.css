@@ -114,6 +114,6 @@ input:invalid {
 
 #nextBlock {
     position: absolute;
-    top: 2.5%;
+    top: calc(2.5% - 2px);
     left: 100%;
 }
