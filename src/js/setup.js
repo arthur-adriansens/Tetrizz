@@ -33,37 +33,37 @@ window.onload = () => {
 
     change_dimensions();
     usernameHTML.value = username ? username : "";
-};
 
-startHTML.onclick = () => {
-    game = new Game();
+    startHTML.onclick = () => {
+        game = new Game();
 
-    startHTML.style.opacity = "0";
-    startHTML.disabled = true;
-    piece = new Piece();
+        startHTML.style.opacity = "0";
+        startHTML.disabled = true;
+        piece = new Piece();
 
-    soundtrack.currentTime = 0;
-    soundtrack.play();
+        soundtrack.currentTime = 0;
+        soundtrack.play();
 
-    alpinaWebAnalytics.emit("newGame");
-};
+        alpinaWebAnalytics.emit("newGame");
+    };
 
-window.onresize = () => {
-    change_dimensions(true);
-};
+    window.onresize = () => {
+        change_dimensions(true);
+    };
 
-usernameHTML.oninput = () => {
-    username = usernameHTML.value;
-    window.localStorage.setItem("username", username);
-};
+    usernameHTML.oninput = () => {
+        username = usernameHTML.value;
+        window.localStorage.setItem("username", username);
+    };
 
-document.querySelector("#reset").onclick = () => {
-    local_scores(true);
-};
+    document.querySelector("#reset").onclick = () => {
+        local_scores(true);
+    };
 
-document.querySelector(".options").onclick = (e) => {
-    if (e.target.classList.contains("options")) return;
-    toggleIcon(e);
+    document.querySelector(".options").onclick = (e) => {
+        if (e.target.classList.contains("options")) return;
+        toggleIcon(e);
+    };
 };
 
 // functions
@@ -86,11 +86,11 @@ function toggleIcon(click) {
     iconChangeVolume(icon.id != "volume" ? icon : 0);
 
     if (totalVolume() == 0) {
-        effectsIcon.src = "files/icons/effects-0.svg";
-        trackIcon.src = "files/icons/music-0.svg";
+        effectsIcon.src = "./assets/icons/effects-0.svg";
+        trackIcon.src = "./assets/icons/music-0.svg";
     } else {
-        effectsIcon.src = `files/icons/effects-${effectsIcon.dataset.state}.svg`;
-        trackIcon.src = `files/icons/music-${trackIcon.dataset.state}.svg`;
+        effectsIcon.src = `./assets/icons/effects-${effectsIcon.dataset.state}.svg`;
+        trackIcon.src = `./assets/icons/music-${trackIcon.dataset.state}.svg`;
     }
 }
 
