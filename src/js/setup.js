@@ -34,6 +34,28 @@ window.onload = () => {
     change_dimensions();
     usernameHTML.value = username ? username : "";
 
+    // set listeners
+    window.onresize = () => {
+        change_dimensions(true);
+    };
+
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            game.pause ? 0 : game.togglePause();
+        } else {
+            game.pause ? game.togglePause() : 0;
+        }
+    });
+
+    document.querySelector("#reset").onclick = () => {
+        local_scores(true);
+    };
+
+    document.querySelector(".options").onclick = (e) => {
+        if (e.target.classList.contains("options")) return;
+        toggleIcon(e);
+    };
+
     startHTML.onclick = () => {
         game = new Game();
 
@@ -47,22 +69,9 @@ window.onload = () => {
         alpinaWebAnalytics.emit("newGame");
     };
 
-    window.onresize = () => {
-        change_dimensions(true);
-    };
-
     usernameHTML.oninput = () => {
         username = usernameHTML.value;
         window.localStorage.setItem("username", username);
-    };
-
-    document.querySelector("#reset").onclick = () => {
-        local_scores(true);
-    };
-
-    document.querySelector(".options").onclick = (e) => {
-        if (e.target.classList.contains("options")) return;
-        toggleIcon(e);
     };
 };
 

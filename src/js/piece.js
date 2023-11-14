@@ -160,7 +160,7 @@ class Piece {
 
     keyPress(e) {
         let key = e.key;
-        key == "Escape" ? game.togglePause() : 0;
+        key == "Escape" || key == "p" ? game.togglePause() : 0;
         if (game.stop || game.pause) return;
 
         key == "ArrowUp" ? piece.rotate() : 0;
