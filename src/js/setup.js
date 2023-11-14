@@ -35,28 +35,21 @@ window.onload = () => {
     usernameHTML.value = username ? username : "";
 
     // set listeners
-    window.onresize = () => {
+    window.addEventListener("resize", () => {
         change_dimensions(true);
-    };
+    });
 
     document.addEventListener("visibilitychange", () => {
+        if (!game) return;
+
         if (document.hidden) {
-            game.pause ? 0 : game.togglePause();
+            game.pause = true;
         } else {
-            game.pause ? game.togglePause() : 0;
+            game.pause = false;
         }
     });
 
-    document.querySelector("#reset").onclick = () => {
-        local_scores(true);
-    };
-
-    document.querySelector(".options").onclick = (e) => {
-        if (e.target.classList.contains("options")) return;
-        toggleIcon(e);
-    };
-
-    startHTML.onclick = () => {
+    startHTML.addEventListener("click", () => {
         game = new Game();
 
         startHTML.style.opacity = "0";
@@ -67,12 +60,21 @@ window.onload = () => {
         soundtrack.play();
 
         alpinaWebAnalytics.emit("newGame");
-    };
+    });
 
-    usernameHTML.oninput = () => {
+    usernameHTML.addEventListener("input", () => {
         username = usernameHTML.value;
         window.localStorage.setItem("username", username);
-    };
+    });
+
+    document.querySelector("#reset").addEventListener("click", () => {
+        local_scores(true);
+    });
+
+    document.querySelector(".options").addEventListener("click", (e) => {
+        if (e.target.classList.contains("options")) return;
+        toggleIcon(e);
+    });
 };
 
 // functions
