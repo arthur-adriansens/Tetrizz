@@ -22,13 +22,13 @@ dbWrapper
             }
 
             console.log(await module.exports.getScores());
-        } catch (err) {
-            console.error(err);
+        } catch (error) {
+            console.error(error);
         }
     });
 
 module.exports = {
-    // Get the scores in the database
+    // Get scores from the database
     getScores: async (user) => {
         try {
             if (user) {
@@ -47,11 +47,11 @@ module.exports = {
 
         try {
             // check for previous records + check if bigger
-            const score = await module.exports.getScores(user);
-            if (score.highscore >= newScore) return success;
+            let userInfo = await module.exports.getScores(user);
+            if (userInfo[0].highscore >= newScore) return success;
 
             // add the score
-            success = await db.run("UPDATE Scores SET highscore = ? WHERE id = ?", [newScore, score.id]);
+            success = await db.run("UPDATE Scores SET highscore = ? WHERE id = ?", [newScore, userInfo[0].id]);
         } catch (err) {
             console.error(err);
         }
