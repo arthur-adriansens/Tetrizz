@@ -15,19 +15,53 @@ fastify
         engine: {
             handlebars: require("handlebars"),
         },
+    })
+    .register(require("@fastify/cookie"), {
+        secret: process.env.ADMIN_KEY,
     });
 
 class Server {
     constructor() {
         fastify.get("/", this.get_homepage);
         fastify.post("/newScore", this.post_score);
+        fastify.get("/admin", this.get_adminpage);
+        fastify.post("/admin", this.post_admin);
 
         this.start_server();
     }
 
     async get_homepage(request, reply) {
+        // await db.addScore("test", 3500000);
         const scores = await db.getScores();
         return reply.status(scores ? 200 : 400).view("public/index.hbs", { scores: scores });
+    }
+
+    async get_adminpage(request, reply) {
+        const key = request.cookies.key;
+        // reply.setCookie('key', process.env.ADMIN_KEY, { path: '/' });
+
+        if (key == process.env.ADMIN_KEY) {
+            const scores = await db.getScores(undefined, true);
+            return reply.status(200).view("src/admin.hbs", { scores: scores });
+        }
+
+        return reply.status(403).view("public/admin_error.html");
+    }
+
+    async post_admin(request, reply) {
+        if (request.cookies.key != process.env.ADMIN_KEY) return reply.status(403).view("public/admin_error.html");
+
+        if ("remove" in request.query && request.body.user) {
+            let success = await db.removeUser(request.body.user);
+            return reply.status(success ? 200 : 400).send({ reload: true });
+        }
+
+        if ("addUser" in request.query) {
+            const { username, score } = request.body;
+            let success = await db.addScore(username, score);
+            // console.log(success)
+            return reply.status(success ? 200 : 400).send("hi");
+        }
     }
 
     async post_score(request, reply) {

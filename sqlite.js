@@ -21,7 +21,7 @@ dbWrapper
                 await db.run("CREATE TABLE Scores (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, highscore INTEGER);");
             }
 
-            console.log(await module.exports.getScores());
+            // console.log(await module.exports.getScores());
         } catch (error) {
             console.error(error);
         }
@@ -29,8 +29,12 @@ dbWrapper
 
 module.exports = {
     // Get scores from the database
-    getScores: async (user) => {
+    getScores: async (user, admin = false) => {
         try {
+            if (admin) {
+                return await db.all("SELECT * from Scores ORDER BY highscore DESC;");
+            }
+
             if (user) {
                 return await db.all("SELECT * from Scores WHERE username = ?;", [user]);
             }
@@ -48,15 +52,22 @@ module.exports = {
         try {
             // check for previous records + check if bigger
             let userInfo = await module.exports.getScores(user);
+
+            // add user
+            if (!userInfo.length) {
+                success = await db.run("INSERT INTO Scores (username, highscore) VALUES (?, ?);", [user, newScore]);
+                return success.changes > 0;
+            }
+
+            // update the score
             if (userInfo[0].highscore >= newScore) return success;
 
-            // add the score
             success = await db.run("UPDATE Scores SET highscore = ? WHERE id = ?", [newScore, userInfo[0].id]);
+
+            return success.changes > 0;
         } catch (err) {
             console.error(err);
         }
-
-        return success.changes > 0;
     },
     removeUser: async (user) => {
         let success = false;
