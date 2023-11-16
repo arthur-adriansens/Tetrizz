@@ -45,7 +45,7 @@ window.onload = () => {
         if (document.hidden) {
             game.pause = true;
         } else {
-            game.pause = false;
+            // game.pause = false;
         }
     });
 
