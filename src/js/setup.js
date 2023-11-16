@@ -84,7 +84,7 @@ function change_dimensions(redraw = false) {
     block_size = canvas.height / rows;
     canvas.width = block_size * cols;
 
-    if (redraw) game?.redraw();
+    if (redraw) game.redraw();
 }
 
 // icons
