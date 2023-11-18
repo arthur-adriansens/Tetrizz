@@ -97,11 +97,11 @@ class Game {
             let row = Math.floor(i / width) + piece.extraY;
 
             //if out of the board
-            if (row >= rows) return true;
+            if (row > rows) return true;
             if (shape[i] != 0 && board[row][col] == undefined) return true;
 
             //if on top of other block
-            if (board[row][col] == 0) continue;
+            if (row == rows || board[row][col] == 0) continue;
             if (board[row + moveRow][col + moveCol] >= 3) return true;
         }
 
