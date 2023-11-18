@@ -14,14 +14,23 @@ dbWrapper
         db = dBase;
 
         try {
+            // check if scores table excists
             let exists = await db.all("PRAGMA table_info('Scores')");
-            exists = exists.length > 0;
 
-            if (!exists) {
+            if (exists.length == 0) {
                 await db.run("CREATE TABLE Scores (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, highscore INTEGER);");
             }
 
+            // check if analytics table excists
+            exists = await db.all("PRAGMA table_info('Analytics')");
+
+            if (exists.length == 0) {
+                await db.run("CREATE TABLE Analytics (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, value INTEGER);");
+                await db.run("INSERT INTO Analytics (name, value) VALUES ('views', 0);");
+            }
+
             // console.log(await module.exports.getScores());
+            console.log(await db.all("SELECT * from Analytics;"));
         } catch (error) {
             console.error(error);
         }
@@ -75,6 +84,13 @@ module.exports = {
         try {
             success = await db.run("DELETE FROM Scores WHERE username = ?;", [user]);
             return success.changes > 0;
+        } catch (err) {
+            console.error(err);
+        }
+    },
+    addView: async () => {
+        try {
+            await db.run("UPDATE Analytics SET value = value + 1 WHERE name = 'views';");
         } catch (err) {
             console.error(err);
         }

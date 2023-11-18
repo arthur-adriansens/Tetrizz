@@ -31,9 +31,9 @@ class Server {
     }
 
     async get_homepage(request, reply) {
-        // await db.addScore("test", 3500000);
         const scores = await db.getScores();
-        return reply.status(scores ? 200 : 400).view("public/index.hbs", { scores: scores });
+        const views = await db.addView();
+        return reply.status(scores ? 200 : 400).view("public/index.hbs", { scores: scores, views: views });
     }
 
     async get_adminpage(request, reply) {
@@ -59,7 +59,6 @@ class Server {
         if ("addUser" in request.query) {
             const { username, score } = request.body;
             let success = await db.addScore(username, score);
-            // console.log(success)
             return reply.status(success ? 200 : 400).send("hi");
         }
     }
@@ -84,4 +83,5 @@ class Server {
         });
     }
 }
+
 new Server();

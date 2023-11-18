@@ -147,6 +147,10 @@ input:invalid {
     transition: fill 1s;
 }
 
+svg>path {
+    pointer-events: none;
+}
+
 .icons svg:hover {
     fill: black;
 }
