@@ -5,7 +5,7 @@
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "build": "grunt && refresh"
+        "build": "grunt"
     },
     "dependencies": {
         "@fastify/cookie": "^9.1.0",
