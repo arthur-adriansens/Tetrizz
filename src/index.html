@@ -12,11 +12,23 @@
 
     <body>
         <div class="left">
-            <h2>public highscores</h2>
+            <div class="public">
+                <h2>public highscores</h2>
 
-            <ol id="publicScores"></ol>
+                <ol id="publicScores"></ol>
 
-            <input id="username" autocomplete="given-name" placeholder="Fill in your username please!" required />
+                <input id="username" autocomplete="given-name" placeholder="Fill in your username please!" required />
+            </div>
+            <div class="personal">
+                <h2>personal highscores</h2>
+
+                <ol id="personalScores">
+                    <li style="list-style: none">
+                        <i>It seems like you haven't played yet!</i>
+                    </li>
+                </ol>
+                <button id="reset">reset</button>
+            </div>
         </div>
 
         <div id="game">
@@ -38,20 +50,44 @@
         </div>
 
         <div class="right">
-            <h2>personal highscores</h2>
-
-            <ol id="personalScores">
-                <li style="list-style: none">
-                    <i>It seems like you haven't played yet!</i>
-                </li>
-            </ol>
-            <button id="reset">reset</button>
+            <p></p>
         </div>
 
-        <div class="options">
-            <img src="./assets/icons/effects-1.svg" id="effects" height="20px" width="auto" data-state="1" data-max="1" />
-            <img src="./assets/icons/music-1.svg" id="track" height="20px" width="auto" data-state="1" data-max="1" />
-            <img src="./assets/icons/volume-1.svg" id="volume" height="20px" width="auto" data-state="1" data-max="2" />
+        <div class="icons">
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+                <path
+                    d="M9,12c3.309,0,6-2.691,6-6S12.309,0,9,0,3,2.691,3,6s2.691,6,6,6Zm0-10c2.206,0,4,1.794,4,4s-1.794,4-4,4-4-1.794-4-4,1.794-4,4-4Zm1.75,14.22c-.568-.146-1.157-.22-1.75-.22-3.86,0-7,3.14-7,7,0,.552-.448,1-1,1s-1-.448-1-1c0-4.962,4.038-9,9-9,.762,0,1.519,.095,2.25,.284,.535,.138,.856,.683,.719,1.218-.137,.535-.68,.856-1.218,.719Zm12.371-4.341c-1.134-1.134-3.11-1.134-4.243,0l-6.707,6.707c-.755,.755-1.172,1.76-1.172,2.829v1.586c0,.552,.448,1,1,1h1.586c1.069,0,2.073-.417,2.828-1.172l6.707-6.707c.567-.567,.879-1.32,.879-2.122s-.312-1.555-.878-2.121Zm-1.415,2.828l-6.708,6.707c-.377,.378-.879,.586-1.414,.586h-.586v-.586c0-.534,.208-1.036,.586-1.414l6.708-6.707c.377-.378,1.036-.378,1.414,0,.189,.188,.293,.439,.293,.707s-.104,.518-.293,.707Z"
+                ></path>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" id="optionsToggle">
+                <path
+                    d="M1,4.75H3.736a3.728,3.728,0,0,0,7.195,0H23a1,1,0,0,0,0-2H10.931a3.728,3.728,0,0,0-7.195,0H1a1,1,0,0,0,0,2ZM7.333,2a1.75,1.75,0,1,1-1.75,1.75A1.752,1.752,0,0,1,7.333,2Z"
+                ></path>
+                <path
+                    d="M23,11H20.264a3.727,3.727,0,0,0-7.194,0H1a1,1,0,0,0,0,2H13.07a3.727,3.727,0,0,0,7.194,0H23a1,1,0,0,0,0-2Zm-6.333,2.75A1.75,1.75,0,1,1,18.417,12,1.752,1.752,0,0,1,16.667,13.75Z"
+                ></path>
+                <path
+                    d="M23,19.25H10.931a3.728,3.728,0,0,0-7.195,0H1a1,1,0,0,0,0,2H3.736a3.728,3.728,0,0,0,7.195,0H23a1,1,0,0,0,0-2ZM7.333,22a1.75,1.75,0,1,1,1.75-1.75A1.753,1.753,0,0,1,7.333,22Z"
+                ></path>
+            </svg>
+            <div class="options">
+                <img src="./assets/icons/effects-1.svg" id="effects" height="20px" width="auto" data-state="1" data-max="1" />
+                <img src="./assets/icons/music-1.svg" id="track" height="20px" width="auto" data-state="1" data-max="1" />
+                <img src="./assets/icons/volume-1.svg" id="volume" height="20px" width="auto" data-state="1" data-max="2" />
+                <svg xmlns="http://www.w3.org/2000/svg" id="speedIcon" viewbox="0 0 24 24">
+                    <path
+                        d="M20,4.052A12,12,0,0,0,3.612,21.572,4.993,4.993,0,0,0,7.12,23h9.767a4.84,4.84,0,0,0,3.354-1.288A12.053,12.053,0,0,0,20,4.052ZM18.868,20.259A2.862,2.862,0,0,1,16.887,21H7.12a3,3,0,0,1-2.11-.858,10,10,0,1,1,13.858.117Zm.2-7.269a1,1,0,0,1-1.132-.848A6.022,6.022,0,0,0,12,7c-5.268-.1-8.04,6.686-4.193,10.285a1,1,0,0,1-1.4,1.43C1.287,13.848,4.939,4.915,12,5a8.035,8.035,0,0,1,7.919,6.858A1,1,0,0,1,19.07,12.99Zm.3,3.244a1,1,0,0,1-1.318.514l-4.867-2.136a2,2,0,1,1,.8-1.832l4.867,2.136A1,1,0,0,1,19.369,16.234Z"
+                    ></path>
+                </svg>
+            </div>
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" class="bottom">
+                <path d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z"></path>
+                <path
+                    d="M12.717,5.063A4,4,0,0,0,8,9a1,1,0,0,0,2,0,2,2,0,0,1,2.371-1.967,2.024,2.024,0,0,1,1.6,1.595,2,2,0,0,1-1,2.125A3.954,3.954,0,0,0,11,14.257V15a1,1,0,0,0,2,0v-.743a1.982,1.982,0,0,1,.93-1.752,4,4,0,0,0-1.213-7.442Z"
+                ></path>
+                <rect x="11" y="17" width="2" height="2" rx="1"></rect>
+            </svg>
         </div>
 
         <script src="./js/setup.js"></script>

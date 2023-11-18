@@ -1,4 +1,4 @@
-@import url('https://fonts.cdnfonts.com/css/lvdc-game-over');
+@import url("https://fonts.cdnfonts.com/css/lvdc-game-over");
 
 html,
 body,
@@ -21,20 +21,21 @@ body {
     align-items: center;
 }
 
-
 canvas {
     background-color: white;
-    border: 2px solid gray;
+    border: 2px solid lightgrey;
     opacity: 100%;
+    border-radius: 7px;
 }
 
 .TRscore {
-    color: #000000b3;
-    font-size: 11px;
-    font-family: 'LVDC Game Over 2', sans-serif;
+    color: grey;
+    font-size: 10px;
+    font-family: "LVDC Game Over 2", sans-serif;
     position: absolute;
     top: 2.5%;
-    right: 2.5%;
+    right: 0;
+    margin: 12px;
 }
 
 .start-end {
@@ -58,7 +59,7 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: 'LVDC Game Over 2', sans-serif;
+    font-family: "LVDC Game Over 2", sans-serif;
 }
 
 #game-over>h2 {
@@ -84,6 +85,11 @@ canvas {
 .options {
     display: inline-block;
     vertical-align: top;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 1s;
+    align-items: center;
 }
 
 img {
@@ -101,9 +107,15 @@ img {
     align-items: center;
 }
 
+.personal {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 input {
     background-color: white;
-    border: 1px solid gray;
+    border: 1px solid lightgrey;
     border-radius: 5px;
 }
 
@@ -114,6 +126,32 @@ input:invalid {
 
 #nextBlock {
     position: absolute;
-    top: calc(2.5% - 2px);
+    top: 2.5%;
     left: 100%;
+}
+
+.icons {
+    position: fixed;
+    height: 100%;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.icons svg {
+    width: 25px;
+    height: 25px;
+    margin: 15px;
+    fill: #6b6b6b;
+    transition: fill 1s;
+}
+
+.icons svg:hover {
+    fill: black;
+}
+
+.icons>.bottom {
+    bottom: 0;
+    position: absolute;
 }

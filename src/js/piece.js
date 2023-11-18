@@ -22,12 +22,15 @@ class Piece {
 
         // add key control
         document.addEventListener("keydown", this.keyPress);
-        this.lowerAutomaticaly();
+        document.addEventListener("keyup", keyUp);
+        lowerAutomaticaly();
     }
 
     disable(end = false) {
         document.removeEventListener("keydown", this.keyPress);
-        clearInterval(this.interval);
+        document.addEventListener("keyup", keyUp);
+        clearInterval(autoInterval);
+        clearInterval(dropInterval);
 
         this.shape = this.shape.map((x) => {
             if (x != 0) {
@@ -166,22 +169,7 @@ class Piece {
         key == "ArrowUp" ? piece.rotate() : 0;
         key == "ArrowLeft" ? piece.move("x;-1") : 0;
         key == "ArrowRight" ? piece.move("x;1") : 0;
-        key == "ArrowDown" ? piece.move("y;1") : 0;
+        key == "ArrowDown" ? keyDown() : 0;
         key == " " ? piece.drop() : 0;
-    }
-
-    lowerAutomaticaly() {
-        // lower block every 750ms
-        this.interval = setInterval(() => {
-            if (game.pause) return;
-
-            if (game.stop) {
-                clearInterval(this.interval);
-                this.downInterval ? clearInterval(this.downInterval) : 0;
-                return;
-            }
-
-            this.move("y;1");
-        }, 750);
     }
 }

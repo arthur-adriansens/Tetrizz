@@ -22,7 +22,7 @@ const dropSound = new Audio("./assets/music/drop.mp3");
 const soundOptions = [soundtrack, endSound, clearSound, rotateSound, dropSound];
 const totalVolume = () => document.querySelector("#volume").dataset.state * 0.5;
 
-let board, game, piece, color, block_size;
+let board, game, piece, color, block_size, autoInterval, dropInterval;
 let username = window.localStorage.getItem("username");
 let startScreen = false;
 
@@ -33,6 +33,7 @@ window.onload = () => {
 
     change_dimensions();
     usernameHTML.value = username ? username : "";
+    local_scores();
 
     // set listeners
     window.addEventListener("resize", () => {
@@ -71,6 +72,11 @@ window.onload = () => {
         local_scores(true);
     });
 
+    document.querySelector("#optionsToggle").addEventListener("click", (e) => {
+        let currentOpacity = document.querySelector(".options").style.opacity;
+        document.querySelector(".options").style.opacity = currentOpacity == 0 ? 1 : 0;
+    });
+
     document.querySelector(".options").addEventListener("click", (e) => {
         if (e.target.classList.contains("options")) return;
         toggleIcon(e);
@@ -100,8 +106,8 @@ function toggleIcon(click) {
         effectsIcon.src = "./assets/icons/effects-0.svg";
         trackIcon.src = "./assets/icons/music-0.svg";
     } else {
-        effectsIcon.src = `./assets/icons/effects-${effectsIcon.dataset.state}.svg`;
-        trackIcon.src = `./assets/icons/music-${trackIcon.dataset.state}.svg`;
+        effectsIcon.src = `icons/effects-${effectsIcon.dataset.state}.svg`;
+        trackIcon.src = `icons/music-${trackIcon.dataset.state}.svg`;
     }
 }
 
@@ -179,4 +185,44 @@ function upload_highscore(score) {
         .then((response) => response.json())
         .then((data) => console.log("Response data:", data))
         .catch((error) => console.error("Error:", error));
+}
+
+function keyDown() {
+    clearInterval(autoInterval);
+    clearInterval(dropInterval);
+
+    dropInterval = setInterval(() => {
+        if (game.pause) return;
+
+        if (game.stop) {
+            clearInterval(dropInterval);
+            return;
+        }
+
+        piece.move("y;1");
+    }, 20);
+}
+
+function keyUp(e) {
+    if (e.key == "ArrowDown") {
+        clearInterval(dropInterval);
+        dropInterval = undefined;
+        lowerAutomaticaly();
+    }
+}
+
+function lowerAutomaticaly() {
+    // lower block every 750ms
+    clearInterval(autoInterval);
+
+    autoInterval = setInterval(() => {
+        if (game.pause) return;
+
+        if (game.stop) {
+            clearInterval(autoInterval);
+            return;
+        }
+
+        piece.move("y;1");
+    }, 750);
 }
