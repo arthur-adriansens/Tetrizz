@@ -33,7 +33,6 @@
     "license": "SEE LICENSE IN ./LICENSE",
     "keywords": [
         "node",
-        "glitch",
         "sqlite"
     ]
 }
