@@ -69,7 +69,7 @@ window.onload = () => {
         soundtrack.currentTime = 0;
         soundtrack.play();
 
-        alpinaWebAnalytics.emit("newGame");
+        // alpinaWebAnalytics.emit("newGame");
     });
 
     usernameHTML.addEventListener("input", () => {
@@ -184,7 +184,7 @@ function new_score(newScore, final = false) {
     window.localStorage.setItem("scores", scores);
 
     local_scores();
-    alpinaWebAnalytics.emit("newScore");
+    // alpinaWebAnalytics.emit("newScore");
 }
 
 function upload_highscore(score) {
