@@ -41,6 +41,12 @@ module.exports = function (grunt) {
                 src: "index.html",
                 dest: "public/",
             },
+            adminError_page: {
+                expand: true,
+                cwd: "src/",
+                src: "admin_error.html",
+                dest: "public/",
+            },
             alpina: {
                 expand: true,
                 cwd: "src/js/",
