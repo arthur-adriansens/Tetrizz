@@ -13,6 +13,7 @@ const usernameHTML = document.querySelector("#username");
 const startHTML = document.querySelector("#start");
 const effectsIcon = document.querySelector("#effects");
 const trackIcon = document.querySelector("#track");
+const speedIcon = document.querySelector("#speedIcon");
 
 const soundtrack = new Audio("./assets/music/Tetris Soundtrack.mp3");
 const clearSound = new Audio("./assets/music/clear.mp3");
@@ -86,7 +87,7 @@ window.onload = () => {
     });
 
     document.querySelector(".options").addEventListener("click", (e) => {
-        if (e.target.classList.contains("options") || e.target.id == "speed") return;
+        if (e.target.classList.contains("options") || e.target.id == "speedIcon" || !e.target) return;
         toggleMusicIcon(e);
     });
 
@@ -216,7 +217,7 @@ function keyDown() {
         }
 
         piece.move("y;1");
-    }, 20);
+    }, speed);
 }
 
 function keyUp(e) {

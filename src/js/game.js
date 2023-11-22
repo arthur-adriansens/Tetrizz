@@ -48,6 +48,8 @@ class Game {
                 }
             });
         });
+
+        this.shadow(false);
     }
 
     drawBlock(col, row, value, context = ctx) {
@@ -173,6 +175,49 @@ class Game {
 
     togglePause() {
         this.pause = !this.pause;
+    }
+
+    shadow(redraw = true, block = piece) {
+        if (redraw) this.redraw();
+        const shape = block.shape;
+
+        const result = (() => {
+            let oldRow;
+
+            for (let row = 0; row < rows; row++) {
+                // check if valid move
+                let clipping = (() => {
+                    for (let i in shape) {
+                        if (shape[i] == 0) continue;
+                        let col = (i % block.width) + Math.floor(cols / 2) - 2 + block.extraX;
+                        let rowResult = Math.floor(i / block.width) + row;
+
+                        // out of the board or on top of other block
+                        if (board[rowResult] == undefined) return true;
+                        if (board[rowResult][col] > 2) return true;
+                    }
+
+                    return false;
+                })();
+
+                if (clipping) return oldRow ? oldRow : row;
+                oldRow = row;
+            }
+        })();
+
+        // fill blocks
+        console.log(result);
+        ctx.strokeStyle = colors[block.piece];
+        ctx.lineWidth = 3;
+
+        for (let i in shape) {
+            let col = (i % block.width) + Math.floor(cols / 2) - 2 + block.extraX;
+            let row = result + Math.floor(i / block.width);
+
+            if (shape[i] > 0 && row < rows) {
+                ctx.strokeRect(col * block_size + 1, row * block_size + 1, block_size - 2, block_size - 2);
+            }
+        }
     }
 
     end() {

@@ -82,6 +82,7 @@ class Piece {
 
         // check for full rows
         game.checkRows();
+        if (newBlock) game.shadow(false, this);
     }
 
     nextBlock() {
@@ -115,6 +116,7 @@ class Piece {
             this.placeBlock();
             rotateSound.currentTime = 0;
             rotateSound.play();
+            game.shadow();
             return;
         }
 
@@ -133,6 +135,7 @@ class Piece {
         rotateSound.currentTime = 0;
         this.placeBlock();
         rotateSound.play();
+        game.shadow();
     }
 
     drop() {
@@ -154,7 +157,7 @@ class Piece {
         this.placeBlock(false, true);
 
         // change x and y cords
-        axis == "y" ? (this.extraY += Number(extra)) : (this.extraX += Number(extra));
+        axis == "y" ? (this.extraY += Number(extra)) : ((this.extraX += Number(extra)), game.shadow());
 
         // move block
         this.placeBlock();
