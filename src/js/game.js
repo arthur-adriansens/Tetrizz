@@ -114,7 +114,10 @@ class Game {
         // check if on bottom row
         if (board[rows - 1].includes(1) && move == "y;1") {
             piece.disable();
-            piece = !this.stop ? new Piece() : 0;
+            if (!this.stop) {
+                piece = new Piece();
+                game.redraw();
+            }
             return false;
         }
 
@@ -140,7 +143,10 @@ class Game {
 
                 if (board[row + 1][col] >= 3) {
                     piece.disable();
-                    if (!this.stop) piece = new Piece();
+                    if (!this.stop) {
+                        piece = new Piece();
+                        game.redraw();
+                    }
                     return false;
                 }
             }
@@ -206,7 +212,6 @@ class Game {
         })();
 
         // fill blocks
-        console.log(result);
         ctx.strokeStyle = colors[block.piece];
         ctx.lineWidth = 3;
 
