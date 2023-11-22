@@ -157,8 +157,8 @@ const local_scores = (clear = false) => {
         .slice()
         .sort((a, b) => b - a);
 
-    if (sortedScores.length >= 10) {
-        sortedScores.splice(10);
+    if (sortedScores.length >= 5) {
+        sortedScores.splice(5);
     }
 
     window.localStorage.setItem("scores", sortedScores);
