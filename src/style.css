@@ -1,4 +1,4 @@
-@import url("https://fonts.cdnfonts.com/css/lvdc-game-over");
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 html,
 body,
@@ -31,7 +31,7 @@ canvas {
 .TRscore {
     color: grey;
     font-size: 10px;
-    font-family: "LVDC Game Over 2", sans-serif;
+    font-family: "Press Start 2P";
     position: absolute;
     top: 2.5%;
     right: 0;
@@ -59,7 +59,7 @@ canvas {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-family: "LVDC Game Over 2", sans-serif;
+    font-family: "Press Start 2P";
 }
 
 #game-over>h2 {
