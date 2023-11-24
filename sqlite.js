@@ -18,7 +18,7 @@ dbWrapper
             let exists = await db.all("PRAGMA table_info('Scores')");
 
             if (exists.length == 0) {
-                await db.run("CREATE TABLE Scores (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, highscore INTEGER);");
+                await db.run("CREATE TABLE Scores (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, highscore INTEGER, ip VARCHAR(39));");
             }
 
             // check if analytics table excists
@@ -55,7 +55,7 @@ module.exports = {
     },
 
     // Post (add) a new score
-    addScore: async (user, newScore) => {
+    addScore: async (user, newScore, ip) => {
         let success = false;
 
         try {
@@ -64,11 +64,14 @@ module.exports = {
 
             // add user
             if (!userInfo.length) {
-                success = await db.run("INSERT INTO Scores (username, highscore) VALUES (?, ?);", [user, newScore]);
+                success = await db.run("INSERT INTO Scores (username, highscore, ip) VALUES (?, ?, ?);", [user, newScore, ip]);
                 return success.changes > 0;
             }
 
             // update the score
+            if (!userInfo[0].ip) {
+                await db.run("UPDATE Scores SET ip = ? WHERE id = ?", [ip, userInfo[0].id]);
+            }
             if (userInfo[0].highscore >= newScore) return success;
 
             success = await db.run("UPDATE Scores SET highscore = ? WHERE id = ?", [newScore, userInfo[0].id]);

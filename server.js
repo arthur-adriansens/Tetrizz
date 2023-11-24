@@ -36,8 +36,19 @@ class Server {
         return reply.status(scores ? 200 : 400).view("public/index.hbs", { scores: scores, views: views });
     }
 
+    async post_score(request, reply) {
+        const body = request.body;
+        if (!body.user || !body.score) return reply.status(400);
+
+        let success = await db.addScore(body.user, body.score, request.headers["x-forwarded-for"]);
+
+        if (success == false) return reply.status(400);
+        return reply.status(200);
+    }
+
     async get_adminpage(request, reply) {
         const key = request.cookies.key;
+        // console.log(key)
         // reply.setCookie('key', process.env.ADMIN_KEY, { path: '/' });
 
         if (key == process.env.ADMIN_KEY) {
@@ -61,16 +72,6 @@ class Server {
             let success = await db.addScore(username, score);
             return reply.status(success ? 200 : 400).send("hi");
         }
-    }
-
-    async post_score(request, reply) {
-        const body = request.body;
-        if (!body.user || !body.score) return reply.status(400);
-
-        let success = await db.addScore(body.user, body.score);
-
-        if (success == false) return reply.status(400);
-        return reply.status(200);
     }
 
     start_server() {

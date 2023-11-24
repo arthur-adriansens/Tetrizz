@@ -11,6 +11,8 @@ body {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    overflow: hidden;
+
     /* background: radial-gradient(circle at 48.7% 44.3%, rgb(30, 144, 231) 0%, rgb(56, 113, 209) 22.9%, rgb(38, 76, 140) 76.7%, rgb(31, 63, 116) 100.2%); */
 }
 
@@ -30,7 +32,7 @@ canvas {
 
 .TRscore {
     color: grey;
-    font-size: 10px;
+    font-size: 0.7rem;
     font-family: "Press Start 2P";
     position: absolute;
     top: 2.5%;
@@ -126,7 +128,7 @@ input:invalid {
 
 #nextBlock {
     position: absolute;
-    top: 2.5%;
+    top: calc(2.5% - 2px);
     left: 100%;
 }
 
