@@ -56,18 +56,25 @@ class Piece {
         if (newBlock) {
             this.piece = nextPiece;
             this.shape = shapes[shapeTypes[this.piece]];
+            shape = this.shape;
             this.nextBlock();
+
+            this.color = colors[this.piece];
+
+            // change logo colors
+            document.documentElement.style.setProperty("--colorGradientStart", colors[this.piece]);
+            document.documentElement.style.setProperty("--colorGradientEnd", colors[this.piece]);
         }
 
         // color
-        color = ctx.fillStyle = clearTrail ? "white" : colors[this.piece];
+        ctx.fillStyle = clearTrail ? "white" : colors[this.piece];
 
         // fill blocks
-        for (let i in this.shape) {
+        for (let i in shape) {
             let col = (i % this.width) + Math.floor(cols / 2) - 2 + this.extraX;
             let row = Math.floor(i / this.width) + this.extraY;
 
-            if (this.shape[i] != 0) {
+            if (shape[i] != 0) {
                 // check if taken
                 if (newBlock && board[row][col] > 2) {
                     this.disable(true);
@@ -75,8 +82,8 @@ class Piece {
                 }
 
                 // change matrix & visual board
-                board[row][col] = clearTrail ? 0 : this.shape[i];
-                game.drawBlock(row, col, this.shape[i]);
+                board[row][col] = clearTrail ? 0 : shape[i];
+                game.drawBlock(row, col, shape[i]);
             }
         }
 
@@ -167,6 +174,7 @@ class Piece {
     keyPress(e) {
         let key = e.key;
         key == "Escape" || key == "p" ? game.togglePause() : 0;
+        key == "s" || key == "Control" ? game.swap_block() : 0;
         if (game.stop || game.pause) return;
 
         key == "ArrowUp" ? piece.rotate() : 0;

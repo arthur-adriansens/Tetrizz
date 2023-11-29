@@ -7,12 +7,14 @@ class Game {
         ctx.lineWidth = 1;
 
         this.score = 0;
+        this.lines = 0;
+        this.level = 1;
         this.stop = this.pause = false;
 
         board = this.redraw(true);
         this.drawNextBlock();
         local_scores();
-        new_score(this.sore);
+        new_score(this.sore, this.level);
     }
 
     redraw(setup = false) {
@@ -57,10 +59,7 @@ class Game {
         context.fillRect(row * block_size + 1, col * block_size + 1, block_size - 2, block_size - 2);
     }
 
-    drawNextBlock(shape, piece) {
-        let ctx2 = nextBlockCtx;
-        let canvas2 = nextBlockCanvas;
-
+    drawNextBlock(shape, piece, ctx2 = nextBlockCtx, canvas2 = nextBlockCanvas) {
         canvas2.width = canvas2.height = block_size * 5;
         ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 
@@ -161,9 +160,8 @@ class Game {
 
         board.map((row, i) => {
             if (!row.includes(0) && !row.includes(1) && !row.includes(2)) {
-                combo += redraw ? 1 : 0;
+                combo += 1;
                 redraw = true;
-                this.score += 100;
 
                 // lower everything (remove row & put new row on top)
                 clearSound.currentTime = 0;
@@ -173,14 +171,45 @@ class Game {
             }
         });
 
-        this.score += 200 * combo;
-        new_score(this.score);
+        if (combo == 1) {
+            this.score += 40;
+        } else if (combo == 2) {
+            this.score += 100;
+        } else if (combo == 3) {
+            this.score += 300;
+        } else if (combo == 4) {
+            this.score += 1200;
+        }
 
+        this.lines += combo;
+        document.querySelector("#lines").innerHTML = this.lines;
+
+        if (this.lines >= this.level * 5) {
+            this.level += 1;
+            this.lines = 0;
+            document.querySelector("#level").innerHTML = this.level;
+            auto_speed -= this.level > 5 ? 50 : 100;
+        }
+
+        new_score(this.score, this.level);
         if (redraw) this.redraw();
     }
 
-    togglePause() {
-        this.pause = !this.pause;
+    togglePause(setPause = undefined) {
+        if (setPause != undefined) {
+            this.pause = setPause;
+        } else {
+            this.pause = !this.pause;
+        }
+
+        // pause screen & music
+        if (this.pause) {
+            document.querySelector(".center.column").classList.remove("game_started");
+            soundtrack.pause();
+        } else {
+            document.querySelector(".center.column").classList.add("game_started");
+            soundtrack.play();
+        }
     }
 
     shadow(redraw = true, block = piece) {
@@ -190,7 +219,7 @@ class Game {
         const result = (() => {
             let oldRow;
 
-            for (let row = 0; row < rows; row++) {
+            for (let row = piece?.extraY ? piece.extraY : 0; row < rows; row++) {
                 // check if valid move
                 let clipping = (() => {
                     for (let i in shape) {
@@ -225,10 +254,37 @@ class Game {
         }
     }
 
+    swap_block() {
+        let old_stored_piece = this.stored_piece;
+        let old_shape = piece.shape;
+
+        // store current shape
+        this.stored_piece = piece.piece;
+
+        // check if valid move
+        if (this.isClipping(0, 0, shapes[shapeTypes[this.stored_piece]], 3)) return;
+        this.drawNextBlock(shapes[shapeTypes[this.stored_piece]], this.stored_piece, storedBlockCtx, storedBlockCanvas);
+
+        // remove current/old block = clear trail
+        piece.placeBlock(false, true, old_shape);
+
+        // draw new stored shape
+        if (old_stored_piece == undefined) {
+            piece.placeBlock();
+            return;
+        }
+
+        piece.piece = old_stored_piece;
+        piece.shape = shapes[shapeTypes[old_stored_piece]];
+        piece.width = 3;
+        this.redraw();
+        piece.placeBlock();
+    }
+
     end() {
         this.stop = true;
 
-        new_score(this.score, true);
+        new_score(this.score, this.level, true);
         document.querySelector("#game").classList.add("over");
 
         console.log("game over");
@@ -237,10 +293,6 @@ class Game {
         soundtrack.pause();
         soundtrack.currentTime = 0;
         endSound.play();
-
-        // reset button
-        startHTML.disabled = false;
-        startHTML.style.opacity = "1";
 
         // sent new highscore to server
         upload_highscore(this.score);

@@ -88,8 +88,8 @@ module.exports = function (grunt) {
                         to: '<script src="tetris.js"></script>',
                     },
                     {
-                        from: '<ol id="publicScores"></ol>',
-                        to: `<ol id="newScores">{{#if scores}}{{#each scores}}<li><b>{{this.username}}</b>: {{this.highscore}}</li>{{/each}}{{else}}<li style="list-style: none;"><i>It seems like you're first!</i></li>{{/if}}</ol>`,
+                        from: '<div class="scores"></div>',
+                        to: `<div class="scores"><ol>{{#if scores}}{{#each scores}}<li><b>{{this.username}}</b>: {{this.highscore}}</li>{{/each}}{{else}}<li style="list-style: none;"><i>It seems like you're first!</i></li>{{/if}}</ol></div>`,
                     },
                 ],
             },
