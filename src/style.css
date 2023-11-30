@@ -118,6 +118,14 @@ canvas#game {
     margin-bottom: 0;
 }
 
+.youtube_background {
+    background-image: url(https://yt3.googleusercontent.com/FlzAFFDcLjYJAHPqEP_aQSm-tOQn_AdQ9kHiRU4wyYT3Z5mPdyXSfz_z0VlMQwfLDYSROB1liHk=s176-c-k-c0x00ffffff-no-rj);
+    background-size: cover;
+    border: none !important;
+    box-shadow: rgba(100, 100, 111, 0.05) 0px 7px 8px 0px !important;
+    cursor: pointer;
+}
+
 .game {
     border-radius: 10px;
     border: 1px solid lightgrey;

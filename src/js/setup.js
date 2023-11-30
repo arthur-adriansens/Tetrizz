@@ -219,7 +219,7 @@ function new_score(newScore, level, final = false) {
 function upload_highscore(score) {
     if (score == 0 || !username) return;
 
-    const url = "https://sjh-tetris.glitch.me/newScore";
+    const url = "https://alpha-tetris.glitch.me/newScore";
     const data = { user: username, score: score };
 
     fetch(url, {

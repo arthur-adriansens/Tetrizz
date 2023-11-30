@@ -65,6 +65,7 @@ module.exports = {
             // add user
             if (!userInfo.length) {
                 success = await db.run("INSERT INTO Scores (username, highscore, ip) VALUES (?, ?, ?);", [user, newScore, ip]);
+                await db.run("INSERT INTO Daily (username, highscore, ip, day) VALUES (?, ?, ?);", [user, newScore, ip]);
                 return success.changes > 0;
             }
 
