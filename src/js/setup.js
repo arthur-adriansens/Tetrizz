@@ -63,6 +63,10 @@ window.onload = () => {
         change_dimensions(true);
     });
 
+    storedBlockCanvas.onclick = () => {
+        window.open("https://www.youtube.com/channel/UCkuuvKL973p_36xk2sC9phg");
+    };
+
     document.addEventListener("visibilitychange", () => {
         if (!game) return;
 

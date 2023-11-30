@@ -269,6 +269,10 @@ class Game {
         piece.placeBlock(false, true, old_shape);
 
         // draw new stored shape
+        if (storedBlockCanvas.classList.contains("youtube_background")) {
+            storedBlockCanvas.classList.remove("youtube_background");
+        }
+
         if (old_stored_piece == undefined) {
             piece.placeBlock();
             return;
