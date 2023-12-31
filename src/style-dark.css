@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=DM+Mono&family=Press+Start+2P&display=swap');
+
+/* SETUP */
+:root {
+    /*todo let them choose different black background shades*/
+    /*primaryDark: #1d1d1d, #121317 */
+    --colorGradientStart: rgb(93.725% 22.353% 13.725%);
+    --colorGradientEnd: rgb(64.052% 0% 0%);
+    --stroke: rgb(155, 30, 15);
+    --settingsOpacity: 0;
+
+    --primaryDark: #1d1d1d;
+    --secondaryDark: ghostwhite;
+    --teriaryDark: rgb(193 205 221);
+    --borderDark: #38393c;
+
+    --error: #FFAAA5;
+}
+
+/* SKELETON */
+.dark .main_layout {
+    background-color: var(--primaryDark);
+}
+
+/* CONTENT */
+.dark .left>div,
+.dark .right>div {
+    border: 1px solid var(--borderDark);
+}
+
+.dark .canvas_wrapper>canvas {
+    border: 1px solid rgb(211 211 211 / 24%);
+    box-shadow: rgba(100, 100, 111, 0.05) 0px 7px 8px 0px;
+}
+
+.dark .game {
+    border: 1px solid var(--borderDark);
+}
+
+.dark h2 {
+    color: var(--secondaryDark);
+}
+
+.dark p {
+    color: var(--secondaryDark);
+}
+
+.dark .startText {
+    color: var(--teriaryDark);
+}
+
+.dark input.rang {
+    background-color: var(--teriaryDark);
+    border: 1px solid var(--secondaryDark);
+}
+
+.dark input.rang:invalid {
+    border-color: #FF8B94;
+    background-color: #FFAAA5;
+}
+
+.dark .scores ol li,
+.dark .rang li {
+    color: var(--teriaryDark);
+}
+
+.dark .settingIcon,
+.dark .settingIcon2 {
+    transition: fill 1s, opacity 1s, filter 1s;
+}
+
+.dark img.settingIcon2:hover {
+    filter: brightness(200%);
+}
+
+.dark .settingIcon:hover,
+.dark .dropIcon:hover,
+.dark .resetIcon:hover {
+    filter: brightness(200%);
+}

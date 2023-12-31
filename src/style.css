@@ -171,6 +171,7 @@ p {
     justify-content: center;
     flex-direction: column;
     transition: opacity 1s;
+    border-radius: 9px;
 }
 
 .startText {
@@ -354,6 +355,18 @@ input.rang:invalid {
 
 img.settingIcon2:hover {
     filter: brightness(0%);
+}
+
+.dark .darktoggle#light {
+    display: none;
+}
+
+.darktoggle#dark {
+    display: none;
+}
+
+.dark .darktoggle#dark {
+    display: block;
 }
 
 .dropIcon,

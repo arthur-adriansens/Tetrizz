@@ -64,7 +64,7 @@ window.onload = () => {
     });
 
     storedBlockCanvas.onclick = () => {
-        window.open("https://www.youtube.com/channel/UCkuuvKL973p_36xk2sC9phg");
+        window.open("https://www.youtube.com/channel/UCkuuvKL973p_36xk2sC9phg?sub_confirmation=1");
     };
 
     document.addEventListener("visibilitychange", () => {
@@ -93,7 +93,7 @@ window.onload = () => {
         document.documentElement.style.setProperty("--settingsOpacity", currentOpacity == 0 ? 1 : 0);
     });
 
-    for (let element of document.querySelectorAll(".settingIcon2")) {
+    for (let element of document.querySelectorAll(".toggle")) {
         element.addEventListener("click", (e) => {
             if (element.id == "speedIcon") {
                 toggleMusicIcon(e, false);
@@ -102,6 +102,12 @@ window.onload = () => {
                 return;
             }
             toggleMusicIcon(e);
+        });
+    }
+
+    for (let element of document.querySelectorAll(".darktoggle")) {
+        element.addEventListener("click", (e) => {
+            document.body.classList.toggle("dark");
         });
     }
 };
@@ -223,7 +229,7 @@ function new_score(newScore, level, final = false) {
 function upload_highscore(score) {
     if (score == 0 || !username) return;
 
-    const url = "https://alpha-tetris.glitch.me/newScore";
+    const url = "https://tetrizz.glitch.me/newScore";
     const data = { user: username, score: score };
 
     fetch(url, {

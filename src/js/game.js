@@ -275,6 +275,7 @@ class Game {
 
         if (old_stored_piece == undefined) {
             piece.placeBlock();
+
             return;
         }
 
@@ -297,6 +298,10 @@ class Game {
         soundtrack.pause();
         soundtrack.currentTime = 0;
         endSound.play();
+
+        // reset button
+        // startHTML.disabled = false;
+        // startHTML.style.opacity = "1";
 
         // sent new highscore to server
         upload_highscore(this.score);
