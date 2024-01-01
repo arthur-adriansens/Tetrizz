@@ -47,6 +47,12 @@ module.exports = function (grunt) {
                 src: "admin_error.html",
                 dest: "public/",
             },
+            css_dark_mode: {
+                expand: true,
+                cwd: "src/",
+                src: "style-dark.css",
+                dest: "public/",
+            },
             // alpina: {
             //     expand: true,
             //     cwd: "src/js/",
@@ -84,8 +90,20 @@ module.exports = function (grunt) {
                         to: "",
                     },
                     {
-                        from: /<script src="\.[\/\\]js[\/\\]setup\.js"><\/script>\n\s+<script src="\.[\/\\]js[\/\\]tetris\.js"><\/script>\n\s+<script src="\.[\/\\]js[\/\\]pieces\.js"><\/script>/g,
+                        from: '<script src="js/setup.js"></script>',
                         to: '<script src="tetris.js"></script>',
+                    },
+                    {
+                        from: '<script src="js/setup.js"></script>',
+                        to: '<script src="tetris.js"></script>',
+                    },
+                    {
+                        from: '<script src="js/game.js"></script>',
+                        to: "",
+                    },
+                    {
+                        from: '<script src="js/piece.js"></script>',
+                        to: "",
                     },
                     {
                         from: '<div class="scores"></div>',

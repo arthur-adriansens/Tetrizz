@@ -210,7 +210,7 @@ p {
 }
 
 .right.column>div {
-    border-right: none;
+    border-right: none !important;
     border-bottom-right-radius: 0px;
     border-top-right-radius: 0px;
 }
