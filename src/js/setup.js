@@ -108,6 +108,8 @@ window.onload = () => {
     for (let element of document.querySelectorAll(".darktoggle")) {
         element.addEventListener("click", (e) => {
             document.body.classList.toggle("dark");
+
+            localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
         });
     }
 };
