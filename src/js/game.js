@@ -42,6 +42,8 @@ class Game {
         }
 
         // redraw blocks
+        ctx.fillStyle = colors[piece?.piece];
+
         board.forEach((row, rowIndex) => {
             row.forEach((x, colIndex) => {
                 if (x != 0) {
@@ -50,6 +52,8 @@ class Game {
                 }
             });
         });
+
+        ctx.fillStyle = colors[piece?.piece];
 
         this.shadow(false);
     }
