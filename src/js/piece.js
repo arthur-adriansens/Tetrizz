@@ -67,7 +67,7 @@ class Piece {
         }
 
         // color
-        ctx.fillStyle = clearTrail ? "white" : colors[this.piece];
+        ctx.fillStyle = clearTrail ? bgColor : colors[this.piece];
 
         // fill blocks
         for (let i in shape) {

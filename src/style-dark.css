@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa&family=DM+Mono&family=Press+Start+2P&display=swap');
-
 /* SETUP */
 :root {
     /*todo let them choose different black background shades*/
@@ -69,7 +67,7 @@
     transition: fill 1s, opacity 1s, filter 1s;
 }
 
-.dark img.settingIcon2:hover {
+.dark .settingIcon2:hover {
     filter: brightness(200%);
 }
 

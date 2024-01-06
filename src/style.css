@@ -216,7 +216,7 @@ p {
 }
 
 .left.column>div {
-    border-left: none;
+    border-left: none !important;
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
 }
@@ -342,7 +342,7 @@ input.rang:invalid {
     right: 0;
     position: absolute;
     margin: 10px;
-    transition: fill 1s;
+    transition: fill 1s, opacity 1s, filter 1s;
     user-select: none;
 }
 
@@ -350,10 +350,9 @@ input.rang:invalid {
     margin-top: 5px;
     margin-bottom: 5px;
     opacity: var(--settingsOpacity);
-    transition: opacity 1s, filter 1s;
 }
 
-img.settingIcon2:hover {
+.settingIcon2:hover {
     filter: brightness(0%);
 }
 
@@ -372,13 +371,13 @@ img.settingIcon2:hover {
 .dropIcon,
 .resetIcon {
     fill: grey;
-    transition: fill 1s;
+    transition: fill 1s, filter 1s;
 }
 
 .settingIcon:hover,
 .dropIcon:hover,
 .resetIcon:hover {
-    fill: black;
+    filter: brightness(0%);
 }
 
 .logo {

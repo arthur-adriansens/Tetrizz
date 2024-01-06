@@ -43,6 +43,7 @@ let speed = 40 - Number(speedIcon.dataset.state) * 10;
 let auto_speed = 750;
 let username = window.localStorage.getItem("username");
 let startScreen = false;
+let bgColor = window.getComputedStyle(document.querySelector(".main_layout")).backgroundColor;
 
 // event listeners
 throphy_logo.onload = () => {
@@ -110,6 +111,7 @@ window.onload = () => {
             document.body.classList.toggle("dark");
 
             localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+            bgColor = window.getComputedStyle(document.querySelector(".main_layout")).backgroundColor;
         });
     }
 };
