@@ -5,7 +5,7 @@
     --colorGradientStart: rgb(93.725% 22.353% 13.725%);
     --colorGradientEnd: rgb(64.052% 0% 0%);
     --stroke: rgb(155, 30, 15);
-    --settingsOpacity: 0;
+    --settingsOpacity: 1;
 
     --lightBackground: #FAFAFA;
     --darkBackground: #212121;
@@ -298,6 +298,11 @@ input.rang:invalid {
     opacity: 100%;
     font-size: 0.85rem;
     font-family: "DM Mono";
+    max-width: 95%;
+}
+
+li>b {
+    line-break: anywhere;
 }
 
 .scores ol li::marker,
@@ -346,11 +351,24 @@ input.rang:invalid {
     user-select: none;
 }
 
+.sepperator {
+    border: none;
+    width: calc(100% - 20px);
+    height: 2px;
+    background-color: grey;
+    border-radius: 2px;
+    margin-top: 0px;
+    margin-bottom: 5px;
+    opacity: var(--settingsOpacity);
+    transition: opacity 1s;
+}
+
 .settingIcon2 {
     margin-top: 5px;
     margin-bottom: 5px;
     opacity: var(--settingsOpacity);
 }
+
 
 .settingIcon2:hover {
     filter: brightness(0%);
@@ -371,7 +389,7 @@ input.rang:invalid {
 .dropIcon,
 .resetIcon {
     fill: grey;
-    transition: fill 1s, filter 1s;
+    transition: fill 1s, filter 1s, rotate 0.5s;
 }
 
 .settingIcon:hover,
@@ -389,4 +407,47 @@ input.rang:invalid {
 .logo>svg {
     width: 80%;
     filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+}
+
+.dropdown-options {
+    position: absolute;
+    width: 100%;
+    max-width: 90%;
+    background: var(--lightBackground);
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    z-index: 1 !important;
+    top: 0.5rem;
+    transition: opacity 1s;
+}
+
+.dropdown-options>h2 {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* .dropdown-options>h2:hover {
+    font-weight: bolder;
+} */
+
+.h2_wrapper>* {
+    z-index: 2;
+    user-select: none;
+    cursor: pointer;
+}
+
+.dropdown-options :first-child {
+    margin-top: calc(3rem + 4px);
+    border-top: 1px solid lightgrey;
+    padding-top: 1rem;
+}
+
+.toggled .dropIcon {
+    rotate: 180deg;
+}
+
+.toggled .dropdown-options {
+    opacity: 0;
+    pointer-events: none;
 }

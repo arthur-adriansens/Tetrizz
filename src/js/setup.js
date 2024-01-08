@@ -51,12 +51,32 @@ throphy_logo.onload = () => {
 };
 
 window.onload = () => {
+    // load preferences in localstorage
+    if (localStorage.getItem("sound_effects")) {
+        let old_state = Number(effectsIcon.dataset.state);
+        effectsIcon.dataset.state = localStorage.getItem("sound_effects");
+        effectsIcon.src = effectsIcon.src.replace(`${old_state}.svg`, `${effectsIcon.dataset.state}.svg`);
+        iconChangeVolume(effectsIcon);
+    }
+
+    if (localStorage.getItem("soundtrack")) {
+        let old_state = Number(trackIcon.dataset.state);
+        trackIcon.dataset.state = localStorage.getItem("soundtrack");
+        trackIcon.src = trackIcon.src.replace(`${old_state}.svg`, `${trackIcon.dataset.state}.svg`);
+    }
+
+    if (localStorage.getItem("speed")) {
+        let old_state = Number(speedIcon.dataset.state);
+        speedIcon.dataset.state = localStorage.getItem("speed");
+        speedIcon.src = speedIcon.src.replace(`${old_state}.svg`, `${speedIcon.dataset.state}.svg`);
+        speed = 40 - Number(speedIcon.dataset.state) * 10;
+    }
+
     soundtrack.loop = true;
     soundtrack.volume = 0.5 * trackIcon.dataset.state;
     bgColor = window.getComputedStyle(document.querySelector(".main_layout")).backgroundColor;
 
     change_dimensions();
-    usernameHTML.value = username ? username : "";
     local_scores();
 
     // set listeners
@@ -99,6 +119,7 @@ window.onload = () => {
             if (element.id == "speedIcon") {
                 toggleMusicIcon(e, false);
                 let state = Number(speedIcon.dataset.state);
+                localStorage.setItem("speed", state);
                 speed = 40 - state * 10;
                 return;
             }
@@ -114,6 +135,11 @@ window.onload = () => {
             bgColor = window.getComputedStyle(document.querySelector(".main_layout")).backgroundColor;
         });
     }
+
+    const dropDownBtn = document.querySelector("#toggleDropDown");
+    dropDownBtn.addEventListener("click", () => {
+        dropDownBtn.parentElement.classList.toggle("toggled");
+    });
 };
 
 // functions
@@ -157,6 +183,10 @@ function iconChangeVolume(icon) {
     let changes = Array.from(soundOptions);
     let effectsLevel = effectsIcon.dataset.state;
     let trackLevel = trackIcon.dataset.state;
+    localStorage.setItem("sound_effects", effectsLevel);
+    if (icon == trackIcon) {
+        localStorage.setItem("soundtrack", trackLevel);
+    }
 
     icon.src?.includes("effects") ? changes.splice(0, 2) : 0;
     icon.src?.includes("music") ? changes.splice(2) : 0;
