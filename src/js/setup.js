@@ -23,6 +23,7 @@ const trackIcon = document.querySelector("#track");
 const speedIcon = document.querySelector("#speedIcon");
 const usernameHTML = document.querySelector("#username");
 const throphy_logo = document.querySelector(".throphy");
+const phoneIcon = document.querySelector("#phoneIcon");
 
 const soundtrack = new Audio("./assets/music/Tetris Soundtrack.mp3");
 const clearSound = new Audio("./assets/music/clear.mp3");
@@ -72,8 +73,19 @@ window.onload = () => {
         speed = 40 - Number(speedIcon.dataset.state) * 10;
     }
 
+    if (localStorage.getItem("touch_screen")) {
+        let old_state = Number(phoneIcon.dataset.state);
+        phoneIcon.dataset.state = localStorage.getItem("touch_screen");
+        phoneIcon.src = phoneIcon.src.replace(`${old_state}.svg`, `${phoneIcon.dataset.state}.svg`);
+
+        if (phoneIcon.dataset.state == 1) {
+            document.body.classList.add("touch_enabled");
+        }
+    }
+
     soundtrack.loop = true;
     soundtrack.volume = 0.5 * trackIcon.dataset.state;
+    endSound.volume = 0.5 * trackIcon.dataset.state;
     bgColor = window.getComputedStyle(document.querySelector(".main_layout")).backgroundColor;
 
     change_dimensions();
@@ -82,6 +94,12 @@ window.onload = () => {
     // set listeners
     window.addEventListener("resize", () => {
         change_dimensions(true);
+
+        if (screen.availHeight > screen.availWidth) {
+            document.body.classList.add("touch_enabled");
+        } else {
+            document.body.classList.remove("touch_enabled");
+        }
     });
 
     storedBlockCanvas.onclick = () => {
@@ -140,6 +158,69 @@ window.onload = () => {
     dropDownBtn.addEventListener("click", () => {
         dropDownBtn.parentElement.classList.toggle("toggled");
     });
+
+    // touchscreen icons
+    document.querySelectorAll("#touch_pause").forEach((x) => {
+        x.onclick = () => {
+            if (!game) {
+                start_game();
+                return;
+            }
+            game?.togglePause();
+        };
+    });
+
+    document.querySelector("#touch_swap").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        game?.swap_block();
+    };
+
+    document.querySelector("#touch_rotate").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        piece?.rotate();
+    };
+
+    document.querySelector("#touch_drop").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        piece?.drop();
+    };
+
+    document.querySelector("#touch_left").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        piece?.move("x;-1");
+    };
+
+    document.querySelector("#touch_right").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        piece?.move("x;1");
+    };
+
+    document.querySelector("#touch_down").onpointerdown = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        keyDown();
+    };
+
+    document.querySelector(".editIcon").onclick = () => {
+        usernameHTML.classList.toggle("hidden");
+    };
 };
 
 // functions
@@ -177,6 +258,11 @@ function toggleMusicIcon(click, changeVolume = true) {
     icon.dataset.state = old_state == icon.dataset.max ? (changeVolume ? 0 : 1) : old_state + 1;
     icon.src = icon.src.replace(`${old_state}.svg`, `${icon.dataset.state}.svg`);
     changeVolume ? iconChangeVolume(icon) : 0;
+
+    if (icon == phoneIcon) {
+        localStorage.setItem("touch_screen", icon.dataset.state);
+        document.body.classList.toggle("touch_enabled");
+    }
 }
 
 function iconChangeVolume(icon) {

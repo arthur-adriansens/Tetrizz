@@ -71,7 +71,12 @@
 }
 
 .dark .settingIcon:hover,
-.dark .dropIcon:hover,
-.dark .resetIcon:hover {
+.dark #toggleDropDown:hover .dropIcon,
+.dark .resetIcon:hover,
+.editIcon:hover {
     filter: brightness(200%);
+}
+
+.dark .dropdown-options {
+    background: var(--primaryDark);
 }

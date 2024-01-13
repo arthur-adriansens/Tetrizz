@@ -279,7 +279,6 @@ class Game {
 
         if (old_stored_piece == undefined) {
             piece.placeBlock();
-
             return;
         }
 
@@ -291,6 +290,7 @@ class Game {
     }
 
     end() {
+        this.togglePause();
         this.stop = true;
 
         new_score(this.score, this.level, true);
@@ -303,9 +303,8 @@ class Game {
         soundtrack.currentTime = 0;
         endSound.play();
 
-        // reset button
-        // startHTML.disabled = false;
-        // startHTML.style.opacity = "1";
+        // abality to restart
+        document.addEventListener("keydown", start_game);
 
         // sent new highscore to server
         upload_highscore(this.score);

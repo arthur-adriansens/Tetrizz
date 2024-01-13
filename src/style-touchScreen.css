@@ -1,0 +1,98 @@
+.touchscreen {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.touchscreen * {
+    user-select: none;
+}
+
+.touchscreen .svg_wrapper {
+    height: 50px;
+    width: auto;
+    aspect-ratio: 1/1;
+}
+
+.touchscreen svg {
+    fill: grey;
+    height: 100%;
+    width: 100%;
+    transition: filter 1s;
+    pointer-events: none;
+}
+
+.touchscreen .svg_wrapper:hover svg {
+    filter: brightness(0%);
+}
+
+.dark .touchscreen .svg_wrapper:hover svg {
+    filter: brightness(200%);
+}
+
+.touchscreen>#right {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    bottom: 0;
+    position: absolute;
+    right: 0;
+    margin: 0 35px 35px 0;
+}
+
+.touchscreen>#left {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    bottom: 0;
+    position: absolute;
+    left: 0;
+    margin: 0 0 35px 35px;
+}
+
+#touch_pause {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px 0 0 10px;
+}
+
+#touch_pause.pause {
+    display: none;
+}
+
+.game_started #touch_pause.pause {
+    display: block;
+}
+
+.game_started #touch_pause.play {
+    display: none;
+}
+
+
+.touch_enabled .touchscreen * {
+    pointer-events: all;
+}
+
+.touch_enabled .touchscreen {
+    opacity: 1;
+}
+
+.touch_enabled .right.column,
+.touch_enabled .left.column {
+    display: none;
+}
+
+.touch_enabled .main_layout {
+    display: flex;
+    justify-content: center;
+}
+
+.touch_enabled h2.startText {
+    display: none;
+}
+
+.touch_enabled canvas {
+    width: 100%;
+}
