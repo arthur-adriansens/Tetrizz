@@ -53,6 +53,12 @@ module.exports = function (grunt) {
                 src: "style-dark.css",
                 dest: "public/",
             },
+            css_phone_mode: {
+                expand: true,
+                cwd: "src/",
+                src: "style-touchScreen.css",
+                dest: "public/",
+            },
             // alpina: {
             //     expand: true,
             //     cwd: "src/js/",
