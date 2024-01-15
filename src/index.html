@@ -196,7 +196,7 @@
                 </div>
                 <div class="public_scores toggled">
                     <div class="h2_wrapper" id="toggleDropDown">
-                        <h2>all time best</h2>
+                        <h2></h2>
                         <svg class="dropIcon" height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
                             <defs></defs>
                             <path
@@ -205,11 +205,14 @@
                         </svg>
 
                         <div class="dropdown-options">
-                            <h2>weekly best</h2>
+                            <h2></h2>
                         </div>
                     </div>
 
-                    <div class="scores"></div>
+                    <div class="scores">
+                        <ol class="allTimeScores"></ol>
+                        <ol class="weeklyScores"></ol>
+                    </div>
 
                     <div class="rang_wrapper">
                         <input class="hidden" id="username" autocomplete="given-name" placeholder="username" required />

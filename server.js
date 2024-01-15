@@ -33,7 +33,7 @@ class Server {
     async get_homepage(request, reply) {
         const scores = await db.getScores();
         const views = await db.addView();
-        return reply.status(scores ? 200 : 400).view("public/index.hbs", { scores: scores, views: views });
+        return reply.status(scores ? 200 : 400).view("public/index.hbs", { scores: scores[0], weekly_scores: scores[1], views: views });
     }
 
     async post_score(request, reply) {

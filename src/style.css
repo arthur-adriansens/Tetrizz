@@ -360,6 +360,19 @@ li>b {
     opacity: 0;
 }
 
+.public_scores .scores>ol>:nth-child(1) {
+    color: gold;
+}
+
+.public_scores .scores>ol>:nth-child(2) {
+    color: #838996;
+}
+
+.public_scores .scores>ol>:nth-child(3) {
+    color: #A97142;
+}
+
+
 .settingsIcon_wrapper {
     position: absolute;
     height: 100%;
@@ -495,4 +508,37 @@ li>b {
 .toggled .dropdown-options {
     opacity: 0;
     pointer-events: none;
+}
+
+
+#toggleDropDown>h2::after {
+    content: "all time best";
+}
+
+.weekly #toggleDropDown>h2::after {
+    content: "weekly best"
+}
+
+.dropdown-options>h2::after {
+    content: "weekly best"
+}
+
+.weekly .dropdown-options>h2::after {
+    content: "all time best";
+}
+
+.scores>.weeklyScores {
+    display: none;
+}
+
+.weekly .scores>.weeklyScores {
+    display: block;
+}
+
+.scores>.allTimeScores {
+    display: block;
+}
+
+.weekly .scores>.allTimeScores {
+    display: none;
 }

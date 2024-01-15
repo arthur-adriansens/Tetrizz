@@ -111,9 +111,17 @@ module.exports = function (grunt) {
                         from: '<script src="js/piece.js"></script>',
                         to: "",
                     },
+                    // {
+                    //     from: '<div class="scores"></div>',
+                    //     to: `<div class="scores"><ol>{{#if scores}}{{#each scores}}<li><b>{{this.username}}</b>: {{this.highscore}}</li>{{/each}}{{else}}<li style="list-style: none;"><i>It seems like you're first!</i></li>{{/if}}</ol></div>`,
+                    // },
                     {
-                        from: '<div class="scores"></div>',
-                        to: `<div class="scores"><ol>{{#if scores}}{{#each scores}}<li><b>{{this.username}}</b>: {{this.highscore}}</li>{{/each}}{{else}}<li style="list-style: none;"><i>It seems like you're first!</i></li>{{/if}}</ol></div>`,
+                        from: '<ol class="allTimeScores"></ol>',
+                        to: '<ol class="allTimeScores">{{#if scores}}{{#each scores}}<li><b>{{this.username}}</b>: {{this.highscore}}</li>{{/each}}{{else}}<li style="list-style: none;"><i>It seems like you are first!</i></li>{{/if}}</ol>',
+                    },
+                    {
+                        from: '<ol class="weeklyScores"></ol>',
+                        to: '<ol class="weeklyScores">{{#if weekly_scores}}{{#each weekly_scores}}<li><b>{{this.username}}</b>: {{this.highscore}}</li>{{/each}}{{else}}<li style="list-style: none;"><i>It seems like you are first this week!</i></li>{{/if}}</ol>',
                     },
                 ],
             },

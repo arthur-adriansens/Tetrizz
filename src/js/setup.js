@@ -221,6 +221,29 @@ window.onload = () => {
     document.querySelector(".editIcon").onclick = () => {
         usernameHTML.classList.toggle("hidden");
     };
+
+    document.querySelector(".dropdown-options > h2").onclick = (e) => {
+        document.querySelector(".public_scores").classList.toggle("weekly");
+
+        // weekly = e.target.innerHTML == "weekly best";
+
+        // document.querySelector("#toggleDropDown > h2").innerHTML = e.target.innerHTML;
+        // document.querySelector(".dropdown-options > h2").innerHTML = weekly ? "all time best" : "weekly best";
+
+        // if (weekly) {
+        //     const url = `${window.location.origin}/newScore`;
+        //     const data = { user: username, score: score, weekly: false };
+
+        //     fetch(url, {
+        //         method: "POST",
+        //         headers: { "Content-Type": "application/json" },
+        //         body: JSON.stringify(data),
+        //     })
+        //         .then((response) => response.json())
+        //         .then((data) => console.log("Response data:", data))
+        //         .catch((error) => console.error("Error:", error));
+        // }
+    };
 };
 
 // functions
@@ -349,8 +372,8 @@ function new_score(newScore, level, final = false) {
 function upload_highscore(score) {
     if (score == 0 || !username) return;
 
-    const url = "https://tetrizz.glitch.me/newScore";
-    const data = { user: username, score: score };
+    const url = `${window.location.origin}/newScore`;
+    const data = { user: username, score: score, weekly: false };
 
     fetch(url, {
         method: "POST",
