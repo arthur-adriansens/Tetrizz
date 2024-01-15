@@ -67,7 +67,7 @@ dbWrapper
 
             // console.log(await module.exports.getScores());
             console.log(await db.all("SELECT * from Analytics;"));
-            // console.log(await db.all("SELECT * from WeeklyScores"));
+            console.log(await db.all("SELECT week from WeeklyScores"));
         } catch (error) {
             console.error(error);
         }
