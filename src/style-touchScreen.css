@@ -70,6 +70,25 @@
     display: none;
 }
 
+/* touchscreen enabled */
+
+@media (orientation: portrait) {
+
+    .right.column,
+    .left.column {
+        display: none;
+    }
+
+    .main_layout {
+        display: flex;
+        justify-content: center;
+    }
+
+    canvas {
+        width: 100%;
+    }
+
+}
 
 .touch_enabled .touchscreen * {
     pointer-events: all;
@@ -79,20 +98,6 @@
     opacity: 1;
 }
 
-.touch_enabled .right.column,
-.touch_enabled .left.column {
-    display: none;
-}
-
-.touch_enabled .main_layout {
-    display: flex;
-    justify-content: center;
-}
-
 .touch_enabled h2.startText {
     display: none;
-}
-
-.touch_enabled canvas {
-    width: 100%;
 }
