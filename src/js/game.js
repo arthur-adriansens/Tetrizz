@@ -5,6 +5,7 @@ class Game {
         document.querySelector("#game").classList.remove("over");
         ctx.strokeStyle = "gray";
         ctx.lineWidth = 1;
+        auto_speed = 750;
 
         this.score = 0;
         this.lines = 0;
@@ -304,6 +305,8 @@ class Game {
         endSound.play();
 
         // abality to restart
+        startScreen = false;
+        document.querySelector(".center.column").classList.remove("game_started");
         document.addEventListener("keydown", start_game);
 
         // sent new highscore to server
