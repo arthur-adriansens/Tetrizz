@@ -43,6 +43,8 @@ class Server {
         let success = await db.addScore(body.user, body.score, request.headers["x-forwarded-for"]);
 
         if (success == false) return reply.status(400);
+        //TODO:::
+        reply.setCookie("username", body.user, { path: "/" });
         return reply.status(200);
     }
 
