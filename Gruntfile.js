@@ -85,6 +85,10 @@ module.exports = function (grunt) {
                         from: "./assets/",
                         to: "",
                     },
+                    {
+                        from: "assets/",
+                        to: "",
+                    },
                 ],
             },
             index: {
