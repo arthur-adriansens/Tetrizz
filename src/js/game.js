@@ -276,6 +276,8 @@ class Game {
         // draw new stored shape
         if (storedBlockCanvas.classList.contains("youtube_background")) {
             storedBlockCanvas.classList.remove("youtube_background");
+            storedBlockCanvas.style.backgroundImage = null;
+            document.querySelector("#close_shoutout").style.display = "none";
         }
 
         if (old_stored_piece == undefined) {
