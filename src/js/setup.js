@@ -233,6 +233,7 @@ window.onload = () => {
 
     document.querySelector("#close_shoutout").onclick = () => {
         storedBlockCanvas.classList.remove("youtube_background");
+        storedBlockCanvas.style.backgroundImage = null;
         document.querySelector("#close_shoutout").style.display = "none";
     };
 };
