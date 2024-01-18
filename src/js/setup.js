@@ -102,8 +102,17 @@ window.onload = () => {
         }
     });
 
+    let randomBgImage = Math.floor(Math.random() * 2) + 1;
+    storedBlockCanvas.style.backgroundImage = `url(assets/shoutout_${randomBgImage}.png)`;
+
     storedBlockCanvas.onclick = () => {
-        window.open("https://www.youtube.com/channel/UCkuuvKL973p_36xk2sC9phg?sub_confirmation=1");
+        let bgImage = storedBlockCanvas.style.backgroundImage;
+
+        if (bgImage.includes("1")) {
+            window.open("https://www.youtube.com/channel/UCkuuvKL973p_36xk2sC9phg?sub_confirmation=1");
+        } else if (bgImage.includes("2")) {
+            window.open("https://open.spotify.com/playlist/2Z1e60Ts9AkBLUKVFuwjvp?si=f7f7a9dca3a7498c");
+        }
     };
 
     document.addEventListener("visibilitychange", () => {
@@ -222,27 +231,9 @@ window.onload = () => {
         usernameHTML.classList.toggle("hidden");
     };
 
-    document.querySelector(".dropdown-options > h2").onclick = (e) => {
-        document.querySelector(".public_scores").classList.toggle("weekly");
-
-        // weekly = e.target.innerHTML == "weekly best";
-
-        // document.querySelector("#toggleDropDown > h2").innerHTML = e.target.innerHTML;
-        // document.querySelector(".dropdown-options > h2").innerHTML = weekly ? "all time best" : "weekly best";
-
-        // if (weekly) {
-        //     const url = `${window.location.origin}/newScore`;
-        //     const data = { user: username, score: score, weekly: false };
-
-        //     fetch(url, {
-        //         method: "POST",
-        //         headers: { "Content-Type": "application/json" },
-        //         body: JSON.stringify(data),
-        //     })
-        //         .then((response) => response.json())
-        //         .then((data) => console.log("Response data:", data))
-        //         .catch((error) => console.error("Error:", error));
-        // }
+    document.querySelector("#close_shoutout").onclick = () => {
+        storedBlockCanvas.classList.remove("youtube_background");
+        document.querySelector("#close_shoutout").style.display = "none";
     };
 };
 

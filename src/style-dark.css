@@ -66,17 +66,20 @@
     transition: fill 1s, opacity 1s, filter 1s;
 }
 
-.dark .settingIcon2:hover {
-    filter: brightness(200%);
-}
-
 .dark .settingIcon:hover,
 .dark #toggleDropDown:hover .dropIcon,
 .dark .resetIcon:hover,
-.editIcon:hover {
+.editIcon:hover,
+.dark .settingIcon2:hover,
+.dark .close_shoutout:hover path {
     filter: brightness(200%);
 }
 
 .dark .dropdown-options {
     background: var(--primaryDark);
+}
+
+.dark .close_shoutout,
+.dark .close_shoutout svg {
+    background-color: var(--darkBackground);
 }
