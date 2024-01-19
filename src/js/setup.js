@@ -108,8 +108,8 @@ window.onload = () => {
         }
     });
 
-    let randomBgImage = Math.floor(Math.random() * bgLinks.length) + 1;
-    storedBlockCanvas.style.backgroundImage = `url(assets/shoutout_${randomBgImage}.png)`;
+    let randomBgImage = Math.floor(Math.random() * bgLinks.length);
+    storedBlockCanvas.style.backgroundImage = `url(assets/shoutout_${randomBgImage + 1}.png)`;
 
     storedBlockCanvas.onclick = () => {
         window.open(bgLinks[randomBgImage]);
