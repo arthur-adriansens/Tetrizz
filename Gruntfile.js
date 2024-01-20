@@ -19,7 +19,7 @@ module.exports = function (grunt) {
             },
             target: {
                 src: ["src/js/setup.js", "src/js/game.js", "src/js/piece.js"],
-                dest: "public/tetris.js",
+                dest: "public/tetrizz.js",
             },
         },
         copy: {
@@ -78,7 +78,7 @@ module.exports = function (grunt) {
         },
         replace: {
             dist: {
-                src: ["public/tetris.js"],
+                src: ["public/tetrizz.js"],
                 overwrite: true,
                 replacements: [
                     {
@@ -101,11 +101,11 @@ module.exports = function (grunt) {
                     },
                     {
                         from: '<script src="js/setup.js"></script>',
-                        to: '<script src="tetris.js"></script>',
+                        to: '<script src="tetrizz.js"></script>',
                     },
                     {
                         from: '<script src="js/setup.js"></script>',
-                        to: '<script src="tetris.js"></script>',
+                        to: '<script src="tetrizz.js"></script>',
                     },
                     {
                         from: '<script src="js/game.js"></script>',

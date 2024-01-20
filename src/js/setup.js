@@ -25,7 +25,7 @@ const usernameHTML = document.querySelector("#username");
 const throphy_logo = document.querySelector(".throphy");
 const phoneIcon = document.querySelector("#phoneIcon");
 
-const soundtrack = new Audio("./assets/music/Tetris Soundtrack.mp3");
+const soundtrack = new Audio("./assets/music/Tetrizz Soundtrack.mp3");
 const clearSound = new Audio("./assets/music/clear.mp3");
 const endSound = new Audio("./assets/music/success.wav");
 const rotateSound = new Audio("./assets/music/rotate.mp3");
