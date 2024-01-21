@@ -14,35 +14,20 @@
     --error: #FFAAA5;
 }
 
-/* SKELETON */
-.dark .main_layout {
+/* DARK COLORS */
+.dark .main_layout,
+.dark .dropdown-options {
     background-color: var(--primaryDark);
 }
 
-/* CONTENT */
-.dark .left>div,
-.dark .right>div {
-    border: 1px solid var(--borderDark);
-}
-
-.dark .canvas_wrapper>canvas {
-    border: 1px solid rgb(211 211 211 / 24%);
-    box-shadow: rgba(100, 100, 111, 0.05) 0px 7px 8px 0px;
-}
-
-.dark .game {
-    border: 1px solid var(--borderDark);
-}
-
-.dark h2 {
-    color: var(--secondaryDark);
-}
-
+.dark h2,
 .dark p {
     color: var(--secondaryDark);
 }
 
-.dark .startText {
+.dark .startText,
+.dark .scores ol li,
+.dark .rang li {
     color: var(--teriaryDark);
 }
 
@@ -51,14 +36,28 @@
     border: 1px solid var(--secondaryDark);
 }
 
+.dark .left>div,
+.dark .right>div,
+.dark .game {
+    border: 1px solid var(--borderDark);
+}
+
+.dark .close_shoutout,
+.dark .close_shoutout svg {
+    background-color: var(--darkBackground);
+}
+
+/* CONTENT */
+
+.dark .canvas_wrapper>canvas {
+    border: 1px solid rgb(211 211 211 / 24%);
+    box-shadow: rgba(100, 100, 111, 0.05) 0px 7px 8px 0px;
+}
+
+
 .dark input.rang:invalid {
     border-color: #FF8B94;
     background-color: #FFAAA5;
-}
-
-.dark .scores ol li,
-.dark .rang li {
-    color: var(--teriaryDark);
 }
 
 .dark .settingIcon,
@@ -66,20 +65,22 @@
     transition: fill 1s, opacity 1s, filter 1s;
 }
 
-.dark .settingIcon:hover,
+.dark .hover:hover,
 .dark #toggleDropDown:hover .dropIcon,
-.dark .resetIcon:hover,
-.editIcon:hover,
-.dark .settingIcon2:hover,
-.dark .close_shoutout:hover path {
+.dark #close_shoutout:hover path {
     filter: brightness(200%);
 }
 
-.dark .dropdown-options {
-    background: var(--primaryDark);
+.dark div.color_options {
+    background-color: var(--darkBackground);
+    border: 3px solid var(--borderDark);
 }
 
-.dark .close_shoutout,
-.dark .close_shoutout svg {
-    background-color: var(--darkBackground);
+.dark div.left_colors {
+    border-right: 1px solid var(--borderDark);
+}
+
+.dark .colors>div:hover,
+.dark .selected_color {
+    background-color: var(--borderDark);
 }

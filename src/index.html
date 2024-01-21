@@ -51,7 +51,6 @@
         <div class="main_layout">
             <div class="left column">
                 <div class="logo">
-                    <!-- todo <a href="https://tetrizz.glitch.me/"></a> -->
                     <svg viewBox="0 0 420.2 65.9" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
                         <defs>
                             <linearGradient
@@ -228,7 +227,14 @@
                                 }
                             </style>
 
-                            <svg class="editIcon" fill="grey" height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+                            <svg
+                                class="editIcon hover"
+                                fill="grey"
+                                height="24"
+                                viewBox="0 -960 960 960"
+                                width="24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
                                 <defs></defs>
                                 <path
                                     d="M200-200h50.461l409.463-409.463-50.461-50.461L200-250.461V-200Zm-23.845 59.999q-15.365 0-25.759-10.395-10.395-10.394-10.395-25.759v-69.306q0-14.632 5.616-27.893 5.615-13.26 15.461-23.106l506.539-506.308q9.073-8.241 20.036-12.736 10.963-4.495 22.993-4.495 12.029 0 23.307 4.27 11.277 4.269 19.969 13.576l48.846 49.461q9.308 8.692 13.269 20.004 3.962 11.311 3.962 22.622 0 12.065-4.121 23.028-4.12 10.964-13.11 20.037L296.46-161.078q-9.846 9.846-23.106 15.461-13.261 5.616-27.893 5.616h-69.306Zm584.23-570.153-50.231-50.231 50.231 50.231Zm-126.134 75.903-24.788-25.673 50.461 50.461-25.673-24.788Z"
@@ -240,7 +246,7 @@
                 <div class="personal_scores">
                     <div class="h2_wrapper">
                         <h2>personal best</h2>
-                        <svg class="resetIcon" id="reset" height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="resetIcon hover" id="reset" height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
                             <defs></defs>
                             <path
                                 d="M292.309-140.001q-29.827 0-51.067-21.241-21.241-21.24-21.241-51.067V-720h-10q-12.75 0-21.375-8.629-8.625-8.628-8.625-21.384 0-12.755 8.625-21.37 8.625-8.616 21.375-8.616H360q0-14.692 10.346-25.038t25.038-10.346h169.232q14.692 0 25.038 10.346T600-779.999h149.999q12.75 0 21.375 8.629t8.625 21.384q0 12.756-8.625 21.371Q762.749-720 749.999-720h-10v507.691q0 29.827-21.241 51.067-21.24 21.241-51.067 21.241H292.309ZM680-720H280v507.691q0 5.385 3.462 8.847 3.462 3.462 8.847 3.462h375.382q5.385 0 8.847-3.462 3.462-3.462 3.462-8.847V-720ZM406.168-280q12.755 0 21.37-8.625 8.616-8.625 8.616-21.374v-300.002q0-12.749-8.629-21.374Q418.896-640 406.141-640q-12.756 0-21.371 8.625-8.615 8.625-8.615 21.374v300.002q0 12.749 8.629 21.374Q393.412-280 406.168-280Zm147.691 0q12.756 0 21.371-8.625 8.615-8.625 8.615-21.374v-300.002q0-12.749-8.629-21.374Q566.588-640 553.832-640q-12.755 0-21.37 8.625-8.616 8.625-8.616 21.374v300.002q0 12.749 8.629 21.374Q541.104-280 553.859-280ZM280-720v520-520Z"
@@ -472,7 +478,7 @@
                 <div class="icons">
                     <div class="settingsIcon_wrapper">
                         <svg
-                            class="settingIcon"
+                            class="settingIcon hover"
                             id="optionsToggle"
                             alt="toggle options"
                             height="24"
@@ -487,7 +493,7 @@
                         </svg>
                         <hr class="sepperator" />
                         <img
-                            class="settingIcon2 toggle"
+                            class="settingIcon2 toggle hover"
                             src="./assets/icons/effects-1.svg"
                             id="effects"
                             alt="toggle sound effects"
@@ -495,7 +501,7 @@
                             data-max="1"
                         />
                         <img
-                            class="settingIcon2 toggle"
+                            class="settingIcon2 toggle hover"
                             src="./assets/icons/music-1.svg"
                             id="track"
                             alt="toggle soundtrack"
@@ -503,7 +509,7 @@
                             data-max="2"
                         />
                         <img
-                            class="settingIcon2 toggle"
+                            class="settingIcon2 toggle hover"
                             src="./assets/icons/speed-2.svg"
                             id="speedIcon"
                             alt="change speed of going down"
@@ -512,7 +518,7 @@
                         />
 
                         <img
-                            class="settingIcon2 toggle"
+                            class="settingIcon2 toggle hover"
                             src="./assets/icons/mobile-0.svg"
                             id="phoneIcon"
                             alt="toggle touchscreen"
@@ -521,7 +527,21 @@
                         />
 
                         <svg
-                            class="settingIcon2 darktoggle"
+                            class="settingIcon2 hover"
+                            id="colorIcon"
+                            height="24"
+                            viewBox="0 -960 960 960"
+                            width="24"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <defs></defs>
+                            <path
+                                d="M479.231-100.001q-77.769 0-146.923-29.962-69.153-29.961-120.769-81.576-51.615-51.616-81.576-120.962Q100.001-401.846 100.001-480q0-79.154 30.77-148.499 30.769-69.346 83.576-120.654 52.808-51.307 123.538-81.076 70.731-29.77 150.884-29.77 75 0 142.153 25.577 67.154 25.577 117.962 70.808 50.807 45.23 80.961 107.499 30.154 62.269 30.154 135.038 0 103.845-61.731 162.46-61.73 58.616-158.268 58.616h-72.461q-17.078 0-27.309 11.154-10.231 11.154-10.231 26.386 0 18.539 15 38.538 15 20 15 45.923 0 39.615-21.923 58.807t-58.845 19.192ZM480-480Zm-220 29.999q21.384 0 35.692-14.307 14.307-14.308 14.307-35.692t-14.307-35.692Q281.384-549.999 260-549.999t-35.692 14.307Q210.001-521.384 210.001-500t14.307 35.692q14.308 14.307 35.692 14.307Zm120-160q21.384 0 35.692-14.307 14.307-14.308 14.307-35.692t-14.307-35.692Q401.384-709.999 380-709.999t-35.692 14.307Q330.001-681.384 330.001-660t14.307 35.692q14.308 14.307 35.692 14.307Zm200 0q21.384 0 35.692-14.307 14.307-14.308 14.307-35.692t-14.307-35.692Q601.384-709.999 580-709.999t-35.692 14.307Q530.001-681.384 530.001-660t14.307 35.692q14.308 14.307 35.692 14.307Zm120 160q21.384 0 35.692-14.307 14.307-14.308 14.307-35.692t-14.307-35.692Q721.384-549.999 700-549.999t-35.692 14.307Q650.001-521.384 650.001-500t14.307 35.692q14.308 14.307 35.692 14.307ZM479.231-160q9.769 0 15.269-4.808Q500-169.615 500-178q0-14-15-31.461-15-17.462-15-54.693 0-42.769 29-69.307Q528-360 570-360h70q70.616 0 115.308-41.385Q800-442.77 800-521.077q0-121.385-93.077-200.154Q613.846-800 488.769-800q-137.154 0-232.961 93Q160-614 160-480q0 133 93.5 226.5T479.231-160Z"
+                            ></path>
+                        </svg>
+
+                        <svg
+                            class="settingIcon2 darktoggle hover"
                             id="light"
                             fill="grey"
                             height="24"
@@ -536,7 +556,7 @@
                         </svg>
 
                         <svg
-                            class="settingIcon2 darktoggle"
+                            class="settingIcon2 darktoggle hover"
                             id="dark"
                             fill="grey"
                             height="24"
@@ -551,7 +571,14 @@
                         </svg>
                     </div>
 
-                    <svg style="bottom: 0;" class="settingIcon" height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <svg
+                        style="bottom: 0;"
+                        class="settingIcon hover"
+                        height="24"
+                        viewBox="0 -960 960 960"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
                         <defs></defs>
                         <path
                             d="M479.56-255.386q17.132 0 28.94-11.829 11.807-11.829 11.807-28.961 0-17.132-11.829-28.939-11.829-11.808-28.961-11.808-17.132 0-28.939 11.829-11.808 11.829-11.808 28.961 0 17.132 11.829 28.94 11.829 11.807 28.961 11.807Zm.507 155.385q-78.836 0-148.204-29.92-69.369-29.92-120.682-81.21-51.314-51.291-81.247-120.629-29.933-69.337-29.933-148.173t29.92-148.204q29.92-69.369 81.21-120.682 51.291-51.314 120.629-81.247 69.337-29.933 148.173-29.933t148.204 29.92q69.369 29.92 120.682 81.21 51.314 51.291 81.247 120.629 29.933 69.337 29.933 148.173t-29.92 148.204q-29.92 69.369-81.21 120.682-51.291 51.314-120.629 81.247-69.337 29.933-148.173 29.933ZM480-160q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Zm3.24-171.231q27.683 0 47.914 17.429t20.231 43.572q0 22-12.923 39.384-12.923 17.385-29.538 32.385-21.78 19.321-38.352 42.507-16.571 23.185-17.725 51.647-.385 10.922 7.692 18.307 8.077 7.384 18.846 7.384 11.538 0 19.538-7.692 7.999-7.692 10.23-18.846 4-20.615 17.039-36.73Q539.23-478 554.441-492.532q21.866-21.314 38.173-46.48 16.308-25.167 16.308-56.141 0-47.538-37.461-78.115Q534-703.845 484-703.845q-35.692 0-67.307 15.808-31.615 15.807-49.231 46.115-5.461 9.307-3.506 19.593 1.955 10.285 10.557 15.619 10.949 6.095 22.487 3.479 11.538-2.615 19.615-13.153 12.154-15.77 29.423-25.308 17.269-9.539 37.202-9.539Z"
@@ -674,22 +701,160 @@
                     <div class="canvas_wrapper">
                         <canvas id="stored_piece" class="youtube_background"></canvas>
 
-                        <div class="close_shoutout" id="close_shoutout">
-                            <svg height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
+                        <div class="close_shoutout_wrapper">
+                            <svg
+                                class="close_shoutout"
+                                id="close_shoutout"
+                                height="24"
+                                viewBox="0 -960 960 960"
+                                width="24"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
                                 <defs></defs>
                                 <path
                                     d="M480-437.847 277.076-234.924q-8.307 8.308-20.884 8.5-12.576.193-21.268-8.5-8.693-8.692-8.693-21.076t8.693-21.076L437.847-480 234.924-682.924q-8.308-8.307-8.5-20.884-.193-12.576 8.5-21.268 8.692-8.693 21.076-8.693t21.076 8.693L480-522.153l202.924-202.923q8.307-8.308 20.884-8.5 12.576-.193 21.268 8.5 8.693 8.692 8.693 21.076t-8.693 21.076L522.153-480l202.923 202.924q8.308 8.307 8.5 20.884.193 12.576-8.5 21.268-8.692 8.693-21.076 8.693t-21.076-8.693L480-437.847Z"
                                 ></path>
                             </svg>
                         </div>
-                        <!-- <div class="youtube_wrapper">
-                            <script src="https://apis.google.com/js/platform.js"></script>
-                            <div class="g-ytsubscribe" data-channelid="UCkuuvKL973p_36xk2sC9phg" data-layout="full" data-count="default"></div>
-                            <img
-                                class="youtube"
-                                src="https://yt3.googleusercontent.com/FlzAFFDcLjYJAHPqEP_aQSm-tOQn_AdQ9kHiRU4wyYT3Z5mPdyXSfz_z0VlMQwfLDYSROB1liHk=s176-c-k-c0x00ffffff-no-rj"
-                            />
-                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="color_options_wrapper">
+            <div class="color_options">
+                <div class="left_colors">
+                    <h2>color palettes</h2>
+
+                    <div class="colors">
+                        <div class="selected_color">
+                            <p>calm</p>
+                            <div>
+                                <div class="color" style="background-color: #84E3C8;"></div>
+                                <div class="color" style="background-color: #A8E6CF;"></div>
+                                <div class="color" style="background-color: #DCEDC1;"></div>
+                                <div class="color" style="background-color: #FFD3B6;"></div>
+                                <div class="color" style="background-color: #FFAAA5;"></div>
+                                <div class="color" style="background-color: #FF8B94;"></div>
+                                <div class="color" style="background-color: #FF7480;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>simple and neutral</p>
+                            <div>
+                                <div class="color" style="background-color: LightSkyBlue;"></div>
+                                <div class="color" style="background-color: DeepSkyBlue;"></div>
+                                <div class="color" style="background-color: LightSalmon;"></div>
+                                <div class="color" style="background-color: Gold;"></div>
+                                <div class="color" style="background-color: DarkSeaGreen;"></div>
+                                <div class="color" style="background-color: Plum;"></div>
+                                <div class="color" style="background-color: Tomato;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>blue</p>
+                            <div>
+                                <div class="color" style="background-color: #EDF2FB;"></div>
+                                <div class="color" style="background-color: #E2EAFC;"></div>
+                                <div class="color" style="background-color: #D7E3FC;"></div>
+                                <div class="color" style="background-color: #CCDBFD;"></div>
+                                <div class="color" style="background-color: #C1D3FE;"></div>
+                                <div class="color" style="background-color: #B6CCFE;"></div>
+                                <div class="color" style="background-color: #ABC4FF;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>high contrast</p>
+                            <div>
+                                <div class="color" style="background-color: #00FFFF;"></div>
+                                <div class="color" style="background-color: #FFFF00;"></div>
+                                <div class="color" style="background-color: #800080;"></div>
+                                <div class="color" style="background-color: #00FF00;"></div>
+                                <div class="color" style="background-color: #FF0000;"></div>
+                                <div class="color" style="background-color: #0000FF;"></div>
+                                <div class="color" style="background-color: #FF7F00;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>calm part 2</p>
+                            <div>
+                                <div class="color" style="background-color: PaleTurquoise;"></div>
+                                <div class="color" style="background-color: LightCyan;"></div>
+                                <div class="color" style="background-color: PaleGoldenrod;"></div>
+                                <div class="color" style="background-color: LightCoral;"></div>
+                                <div class="color" style="background-color: PaleVioletRed;"></div>
+                                <div class="color" style="background-color: LightSkyBlue;"></div>
+                                <div class="color" style="background-color: LightSalmon;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right_pieces">
+                    <svg
+                        id="closeColorsIcon"
+                        class="hover"
+                        fill="grey"
+                        height="24"
+                        viewBox="0 -960 960 960"
+                        width="24"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <defs></defs>
+                        <path
+                            d="M480-437.847 277.076-234.924q-8.307 8.308-20.884 8.5-12.576.193-21.268-8.5-8.693-8.692-8.693-21.076t8.693-21.076L437.847-480 234.924-682.924q-8.308-8.307-8.5-20.884-.193-12.576 8.5-21.268 8.692-8.693 21.076-8.693t21.076 8.693L480-522.153l202.924-202.923q8.307-8.308 20.884-8.5 12.576-.193 21.268 8.5 8.693 8.692 8.693 21.076t-8.693 21.076L522.153-480l202.923 202.924q8.308 8.307 8.5 20.884.193 12.576-8.5 21.268-8.692 8.693-21.076 8.693t-21.076-8.693L480-437.847Z"
+                        ></path>
+                    </svg>
+
+                    <div style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">
+                        <svg class="color_preview" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+                            <defs></defs>
+                            <g transform="matrix(1.286502, 0, 0, 1.286535, -95.782141, -135.546308)">
+                                <rect x="90.39" y="120"></rect>
+                                <rect y="120" x="126"></rect>
+                                <rect y="120" x="161.6"></rect>
+                                <rect y="155.6" x="126"></rect>
+                            </g>
+                            <g style="transform-origin: 291.092px 173.382px;" transform="matrix(-1.286502, 0, 0, -1.286535, 2.943573, -82.532248)">
+                                <rect x="255.5" y="120"></rect>
+                                <rect y="120" x="255.519"></rect>
+                                <rect y="120" x="291.119"></rect>
+                                <rect y="155.6" x="255.519"></rect>
+                                <rect y="191.2" x="255.5"></rect>
+                            </g>
+                            <g style="transform-origin: 291.091px 173.382px;" transform="matrix(-1.286502, 0, 0, -1.286535, 140.853101, -36.470844)">
+                                <rect x="255.5" y="120"></rect>
+                                <rect y="120" x="255.519"></rect>
+                                <rect y="84.409" x="255.493"></rect>
+                                <rect y="155.6" x="255.519"></rect>
+                                <rect y="191.2" x="255.5"></rect>
+                            </g>
+                            <g transform="matrix(1.286502, 0, 0, 1.286535, -65.10678, -142.409314)">
+                                <rect x="66.546" y="285.9"></rect>
+                                <rect y="250.332" x="102.156"></rect>
+                                <rect y="250.332" x="137.756"></rect>
+                                <rect y="285.932" x="102.156"></rect>
+                            </g>
+                            <g transform="matrix(1.286502, 0, 0, 1.286535, -127.052656, 10.362091)">
+                                <rect x="316.644" y="191.37"></rect>
+                                <rect y="155.802" x="281.029"></rect>
+                                <rect y="155.802" x="316.629"></rect>
+                                <rect y="191.402" x="281.029"></rect>
+                            </g>
+                            <g style="transform-origin: 291.091px 173.382px;" transform="matrix(-1.286502, 0, 0, -1.286535, -95.646742, 239.10229)">
+                                <rect x="-326.683" y="120" transform="matrix(-1, 0, 0, 1, 0, 0)"></rect>
+                                <rect y="120" x="-326.664" transform="matrix(-1, 0, 0, 1, 0, 0)"></rect>
+                                <rect y="120" x="-291.064" transform="matrix(-1, 0, 0, 1, 0, 0)"></rect>
+                                <rect y="155.6" x="-326.664" transform="matrix(-1, 0, 0, 1, 0, 0)"></rect>
+                                <rect y="191.2" x="-326.683" transform="matrix(-1, 0, 0, 1, 0, 0)"></rect>
+                            </g>
+                            <g transform="matrix(-1.286502, 0, 0, 1.286535, 565.106801, 18.410713)">
+                                <rect x="66.546" y="285.9"></rect>
+                                <rect y="250.332" x="102.156"></rect>
+                                <rect y="250.332" x="137.756"></rect>
+                                <rect y="285.932" x="102.156"></rect>
+                            </g>
+                        </svg>
                     </div>
                 </div>
             </div>
@@ -713,31 +878,3 @@
         </script>
     </body>
 </html>
-
-<!-- <div class="color_options">
-                    <div class="h2_wrapper">
-                        <h2>colors</h2>
-
-                        <svg class="closeIcon" height="24" viewBox="0 -960 960 960" width="24" xmlns="http://www.w3.org/2000/svg">
-                            <defs></defs>
-                            <path
-                                d="M480-437.847 277.076-234.924q-8.307 8.308-20.884 8.5-12.576.193-21.268-8.5-8.693-8.692-8.693-21.076t8.693-21.076L437.847-480 234.924-682.924q-8.308-8.307-8.5-20.884-.193-12.576 8.5-21.268 8.692-8.693 21.076-8.693t21.076 8.693L480-522.153l202.924-202.923q8.307-8.308 20.884-8.5 12.576-.193 21.268 8.5 8.693 8.692 8.693 21.076t-8.693 21.076L522.153-480l202.923 202.924q8.308 8.307 8.5 20.884.193 12.576-8.5 21.268-8.692 8.693-21.076 8.693t-21.076-8.693L480-437.847Z"
-                            ></path>
-                        </svg>
-                    </div>
-
-                    <div class="colors">
-                        <div>
-                            <p>neutral</p>
-                            <div>
-                                <div class="color" style="background-color: #84E3C8;"></div>
-                                <div class="color" style="background-color: #A8E6CF;"></div>
-                                <div class="color" style="background-color: #DCEDC1;"></div>
-                                <div class="color" style="background-color: #FFD3B6;"></div>
-                                <div class="color" style="background-color: #FFAAA5;"></div>
-                                <div class="color" style="background-color: #FF8B94;"></div>
-                                <div class="color" style="background-color: #FF7480;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->

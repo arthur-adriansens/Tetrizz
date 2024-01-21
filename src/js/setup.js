@@ -9,14 +9,6 @@ const nextBlockCtx = nextBlockCanvas.getContext("2d");
 const storedBlockCtx = storedBlockCanvas.getContext("2d");
 const cols = 10;
 const rows = 16;
-//nice neutral colors
-const colors = ["#84E3C8", "#A8E6CF", "#DCEDC1", "#FFD3B6", "#FFAAA5", "#FF8B94", "#FF7480"];
-// const colors = ["LightSkyBlue", "DeepSkyBlue", "LightSalmon", "Gold", "DarkSeaGreen", "Plum", "Tomato"];
-//nice one color:
-// const colors = ["#EDF2FB", "#E2EAFC", "#D7E3FC", "#CCDBFD", "#C1D3FE", "#B6CCFE", "#ABC4FF"];
-//high constrast
-// const colors = ["#00FFFF", "#FFFF00", "#800080", "#00FF00", "#FF0000", "#0000FF", "#FF7F00"];
-// const colors = ["PaleTurquoise", "LightCyan", "PaleGoldenrod", "LightCoral", "PaleVioletRed", "LightSkyBlue", "LightSalmon"];
 const scoresHTML = document.querySelector("#personal_scores");
 const effectsIcon = document.querySelector("#effects");
 const trackIcon = document.querySelector("#track");
@@ -39,12 +31,7 @@ const speedIcons = [
     "M23.9,11.437A12,12,0,0,0,4,4.052a12.055,12.055,0,0,0-.246,17.66A4.847,4.847,0,0,0,7.114,23H16.88a4.988,4.988,0,0,0,3.508-1.429A11.942,11.942,0,0,0,23.9,11.437ZM18.99,20.142A3.005,3.005,0,0,1,16.88,21H7.114a2.863,2.863,0,0,1-1.982-.741A10.045,10.045,0,0,1,5.337,5.543a10,10,0,0,1,13.653,14.6ZM20,13a7.927,7.927,0,0,1-2.409,5.715,1,1,0,1,1-1.4-1.43C20.039,13.684,17.268,6.9,12,7a6.024,6.024,0,0,0-5.939,5.142,1,1,0,0,1-1.98-.284C5.766,2.13,19.73,3.113,20,13Zm-6,0a2.013,2.013,0,0,1-3.184,1.612L5.949,16.748a1,1,0,1,1-.8-1.832l4.867-2.136A2,2,0,0,1,14,13Z",
 ];
 
-const bgLinks = [
-    "https://www.youtube.com/channel/UCkuuvKL973p_36xk2sC9phg?sub_confirmation=1",
-    "https://open.spotify.com/playlist/2Z1e60Ts9AkBLUKVFuwjvp?si=f7f7a9dca3a7498c",
-    "https://open.spotify.com/playlist/3UbxPcawwl6FC7Q5HbKeKI?si=b2d7ce82545041fe",
-];
-
+let colors = JSON.parse(window.localStorage.getItem("color")) || ["#84E3C8", "#A8E6CF", "#DCEDC1", "#FFD3B6", "#FFAAA5", "#FF8B94", "#FF7480"];
 let board, game, piece, block_size, autoInterval, dropInterval, bgColor;
 let speed = 40 - Number(speedIcon.dataset.state) * 10;
 let auto_speed = 750;
@@ -95,6 +82,7 @@ window.onload = () => {
     bgColor = window.getComputedStyle(document.querySelector(".main_layout")).backgroundColor;
 
     change_dimensions();
+    loadColorsPreview();
     local_scores();
 
     // set listeners
@@ -236,6 +224,24 @@ window.onload = () => {
         storedBlockCanvas.style.backgroundImage = null;
         document.querySelector("#close_shoutout").style.display = "none";
     };
+
+    document.querySelector("#colorIcon").onclick = () => {
+        document.querySelector(".color_options_wrapper").classList.toggle("hidden");
+    };
+
+    document.querySelector("#closeColorsIcon").onclick = () => {
+        document.querySelector(".color_options_wrapper").classList.add("hidden");
+    };
+
+    document.querySelectorAll(".colors>div").forEach((div) => {
+        div.onmouseover = () => {
+            loadColorsPreview(div.querySelectorAll(".color"), div);
+        };
+
+        div.onclick = () => {
+            loadColorsPreview(div.querySelectorAll(".color"), div, true);
+        };
+    });
 };
 
 // functions
@@ -416,4 +422,26 @@ function lowerAutomaticaly() {
 
         piece.move("y;1");
     }, auto_speed);
+}
+
+function loadColorsPreview(preference, parent, click = false) {
+    let colors_result = preference ? [] : colors;
+
+    if (preference) {
+        for (let color of preference) {
+            colors_result.push(color.style.backgroundColor);
+        }
+    }
+
+    document.querySelectorAll(".color_preview g").forEach((group, i) => {
+        group.style.fill = colors_result[i];
+    });
+
+    if (click && parent) {
+        colors = colors_result;
+        window.localStorage.setItem("color", JSON.stringify(colors));
+        document.querySelector(".selected_color").classList.remove("selected_color");
+        parent.classList.add("selected_color");
+        game?.redraw();
+    }
 }
