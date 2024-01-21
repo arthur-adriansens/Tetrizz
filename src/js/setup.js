@@ -161,6 +161,10 @@ window.onload = () => {
         dropDownBtn.parentElement.classList.toggle("toggled");
     });
 
+    document.querySelector(".dropdown-options > h2").onclick = (e) => {
+        document.querySelector(".public_scores").classList.toggle("weekly");
+    };
+
     // touchscreen icons
     document.querySelectorAll("#touch_pause").forEach((x) => {
         x.onclick = () => {
