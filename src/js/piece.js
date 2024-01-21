@@ -172,6 +172,11 @@ class Piece {
     }
 
     keyPress(e) {
+        if (game.pause) {
+            game.togglePause();
+            return;
+        }
+
         let key = e.key;
         key == "Escape" || key == "p" ? game.togglePause() : 0;
         key == "s" || key == "Control" ? game.swap_block() : 0;
