@@ -444,7 +444,7 @@ function loadColorsPreview(preference, parent, click = false) {
 
     if (preference) {
         for (let color of preference) {
-            colors_result.push(color.style.backgroundColor);
+            colors_result.push(color.style.backgroundColor || "grey");
         }
     }
 
