@@ -671,3 +671,12 @@ div.left_colors {
     margin: .5rem;
     border-radius: 5px;
 }
+
+input.color {
+    border: none;
+    background-color: grey;
+}
+
+input.color::-webkit-color-swatch {
+    border: none;
+}

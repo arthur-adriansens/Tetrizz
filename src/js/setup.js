@@ -251,6 +251,12 @@ window.onload = () => {
             loadColorsPreview(div.querySelectorAll(".color"), div, true);
         };
     });
+
+    document.querySelectorAll("input.color").forEach((input) => {
+        input.oninput = () => {
+            input.style.backgroundColor = input.value;
+        };
+    });
 };
 
 // functions
