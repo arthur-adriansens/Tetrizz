@@ -449,7 +449,7 @@ function loadColorsPreview(preference, parent, click = false) {
     }
 
     document.querySelectorAll(".color_preview g").forEach((group, i) => {
-        group.style.fill = colors_result[i];
+        group.style.fill = colors_result[Number(group.dataset.order)];
     });
 
     if (click && parent) {
