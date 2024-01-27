@@ -37,6 +37,12 @@ const bgLinks = [
 ];
 
 let colors = JSON.parse(window.localStorage.getItem("color")) || ["#84E3C8", "#A8E6CF", "#DCEDC1", "#FFD3B6", "#FFAAA5", "#FF8B94", "#FF7480"];
+
+let time_seconds = JSON.parse(window.localStorage.getItem("time")) || 0;
+time_seconds =
+    time_seconds && time_seconds[1] == `${new Date().getMonth() + 1} ${new Date().getFullYear()} ${new Date().getDate()}` ? time_seconds[0] : 0;
+let time_minutes = Math.floor(time_seconds / 60);
+
 let board, game, piece, block_size, autoInterval, dropInterval, bgColor;
 let speed = 40 - Number(speedIcon.dataset.state) * 10;
 let auto_speed = 750;
@@ -81,6 +87,10 @@ window.onload = () => {
         }
     }
 
+    if (window.localStorage.getItem("timer_enabled") == "true") {
+        document.querySelector("#timer_wrapper").classList.add("time");
+    }
+
     soundtrack.loop = true;
     soundtrack.volume = 0.5 * trackIcon.dataset.state;
     endSound.volume = 0.5 * trackIcon.dataset.state;
@@ -89,6 +99,28 @@ window.onload = () => {
     change_dimensions();
     loadColorsPreview();
     local_scores();
+
+    // timer
+    document.querySelector("#minutes").innerHTML = time_minutes;
+    if (document.querySelector("#timer_wrapper").classList.contains("time") && time_seconds / 60 > 30) document.body.innerHTML = "Time's up!!";
+
+    setInterval(() => {
+        if (game && !game.pause) {
+            time_seconds += 1;
+
+            if (Math.floor(time_seconds / 60) != time_minutes) {
+                time_minutes = Math.floor(time_seconds / 60);
+                document.querySelector("#minutes").innerHTML = time_minutes;
+
+                let day = `${new Date().getMonth() + 1} ${new Date().getFullYear()} ${new Date().getDate()}`;
+                window.localStorage.setItem("time", JSON.stringify([time_seconds, day]));
+
+                if (document.querySelector("#timer_wrapper").classList.contains("time") && time_seconds / 60 > 30) {
+                    document.body.innerHTML = "Time's up!!";
+                }
+            }
+        }
+    }, 1000);
 
     // set listeners
     window.addEventListener("resize", () => {
@@ -257,6 +289,11 @@ window.onload = () => {
             input.style.backgroundColor = input.value;
         };
     });
+
+    document.querySelector("#timerIcon").onclick = () => {
+        document.querySelector("#timer_wrapper").classList.toggle("time");
+        window.localStorage.setItem("timer_enabled", document.querySelector("#timer_wrapper").classList.contains("time"));
+    };
 };
 
 // functions
