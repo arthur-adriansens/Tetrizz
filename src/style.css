@@ -381,6 +381,11 @@ li>b {
 
 /* ICONS */
 
+svg {
+    width: 24px;
+    height: 24px;
+}
+
 .settingsIcon_wrapper {
     position: absolute;
     height: 100%;
