@@ -116,10 +116,11 @@ module.exports = {
                 await db.run("UPDATE Scores SET ip = ? WHERE id = ?", [ip, userInfo[0].id]);
                 await db.run("UPDATE WeeklyScores SET ip = ? WHERE id = ?", [ip, userInfo[0].id]);
             }
-            if (userInfo[0].highscore >= newScore) return success;
 
+            await db.run("UPDATE WeeklyScores SET highscore = ? WHERE id = ?", [newScore, userInfo[0].id]);
+
+            if (userInfo[0].highscore >= newScore) return success;
             success = await db.run("UPDATE Scores SET highscore = ? WHERE id = ?", [newScore, userInfo[0].id]);
-            success = await db.run("UPDATE WeeklyScores SET highscore = ? WHERE id = ?", [newScore, userInfo[0].id]);
 
             // update weekly
             await remove_previous_week();
