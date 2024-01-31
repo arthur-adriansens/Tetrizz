@@ -28,12 +28,32 @@
         </form>
 
         <script>
-            window.onload = () => { document.querySelector("#scores").addEventListener("click", (e) => { if (e.target.dataset.user) {
-            fetch(`${window.location.origin}/admin?remove`, { method: "POST", body: JSON.stringify({ user: e.target.dataset.user, }), headers: {
-            "Content-type": "application/json; charset=UTF-8" } }) .then((response) => response.json()) .then((data) => data.reload ?
-            location.reload() : 0); } }); } let ips = []; for (let score of document.querySelector("#scores").children) { let filter1 =
-            score.innerHTML.split("(")[1]; let filter2 = filter1.split(")")[0]; let ip = filter2.split(",")[0]; if (ip && ips.includes(ip)) {
-            score.style.color = "red"; } ips.push(ip); } };
+            window.onload = () => {
+                document.querySelector("#scores").addEventListener("click", (e) => {
+                    if (e.target.dataset.user) {
+                        fetch(`${window.location.origin}/admin?remove`, {
+                            method: "POST",
+                            body: JSON.stringify({ user: e.target.dataset.user }),
+                            headers: {
+                                "Content-type": "application/json; charset=UTF-8",
+                            },
+                        })
+                            .then((response) => response.json())
+                            .then((data) => (data.reload ? location.reload() : 0));
+                    }
+                });
+            };
+
+            let ips = [];
+            for (let score of document.querySelector("#scores").children) {
+            let filter1 = score.innerHTML.split("(")[1];
+            let filter2 = filter1.split(")")[0];
+            let ip = filter2.split(",")[0];
+            if (ip && ips.includes(ip)) {
+                score.style.color = "red";
+            }
+            ips.push(ip);
+            }
         </script>
     </body>
 </html>

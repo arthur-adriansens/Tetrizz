@@ -103,7 +103,7 @@ module.exports = {
             let userInfo = await module.exports.getScores(user);
 
             // add user
-            if (!userInfo[0].length) {
+            if (userInfo.length < 1) {
                 success = await db.run("INSERT INTO Scores (username, highscore, ip) VALUES (?, ?, ?);", [user, newScore, ip]);
                 await db.run("INSERT INTO WeeklyScores (username, highscore, ip) VALUES (?, ?, ?);", [user, newScore, ip]);
 
