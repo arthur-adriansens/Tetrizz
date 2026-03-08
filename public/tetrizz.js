@@ -1,0 +1,1007 @@
+/** @format */
+
+// global variables
+const canvas = document.querySelector("canvas#game");
+const nextBlockCanvas = document.querySelector("canvas#next_piece");
+const storedBlockCanvas = document.querySelector("canvas#stored_piece");
+const ctx = canvas.getContext("2d");
+const nextBlockCtx = nextBlockCanvas.getContext("2d");
+const storedBlockCtx = storedBlockCanvas.getContext("2d");
+const cols = 10;
+const rows = 16;
+const scoresHTML = document.querySelector("#personal_scores");
+const effectsIcon = document.querySelector("#effects");
+const trackIcon = document.querySelector("#track");
+const speedIcon = document.querySelector("#speedIcon");
+const usernameHTML = document.querySelector("#username");
+const throphy_logo = document.querySelector(".throphy");
+const phoneIcon = document.querySelector("#phoneIcon");
+
+const soundtrack = new Audio("music/Tetrizz Soundtrack.mp3");
+const clearSound = new Audio("music/clear.mp3");
+const endSound = new Audio("music/success.wav");
+const rotateSound = new Audio("music/rotate.mp3");
+const dropSound = new Audio("music/drop.mp3");
+const soundOptions = [soundtrack, endSound, clearSound, rotateSound, dropSound];
+
+const speedIcons = [
+    "M20,4.052A12,12,0,0,0,3.612,21.572,4.993,4.993,0,0,0,7.12,23h9.767a4.84,4.84,0,0,0,3.354-1.288A12.053,12.053,0,0,0,20,4.052ZM18.868,20.259A2.862,2.862,0,0,1,16.887,21H7.12a3,3,0,0,1-2.11-.858,10,10,0,1,1,13.858.117ZM20,13a7.932,7.932,0,0,1-2.408,5.715,1,1,0,0,1-1.4-1.43c4.141-3.956.6-11.095-5.05-10.223a1,1,0,0,1-.286-1.981A8.026,8.026,0,0,1,20,13ZM7.806,17.284a1,1,0,0,1-1.4,1.432,7.973,7.973,0,0,1-2.327-6.859,1,1,0,0,1,1.981.286A5.966,5.966,0,0,0,7.806,17.284ZM14,13a2,2,0,1,1-3.932-.518L6.293,8.707A1,1,0,0,1,7.707,7.293l3.775,3.775A2.008,2.008,0,0,1,14,13Z",
+    "M20,4.052A12,12,0,0,0,3.612,21.571,4.988,4.988,0,0,0,7.12,23h9.767a4.84,4.84,0,0,0,3.354-1.288A12.054,12.054,0,0,0,20,4.052ZM18.868,20.259A2.862,2.862,0,0,1,16.887,21H7.12a3.005,3.005,0,0,1-2.11-.858,10,10,0,1,1,13.858.117ZM8.82,6.683a1,1,0,0,1-.248,1.392,6.031,6.031,0,0,0-.766,9.21,1,1,0,1,1-1.4,1.43A8.042,8.042,0,0,1,7.427,6.435,1,1,0,0,1,8.82,6.683ZM20,13a7.932,7.932,0,0,1-2.408,5.715,1,1,0,0,1-1.4-1.43,6.031,6.031,0,0,0-.765-9.21,1,1,0,1,1,1.144-1.64A8.008,8.008,0,0,1,20,13Zm-6,0a2,2,0,1,1-3-1.732V6a1,1,0,0,1,2,0v5.268A2,2,0,0,1,14,13Z",
+    "M20,4.052A12,12,0,0,0,3.612,21.572,4.993,4.993,0,0,0,7.12,23h9.767a4.84,4.84,0,0,0,3.354-1.288A12.053,12.053,0,0,0,20,4.052ZM18.868,20.259A2.862,2.862,0,0,1,16.887,21H7.12a3,3,0,0,1-2.11-.858,10,10,0,1,1,13.858.117Zm.2-7.269a1,1,0,0,1-1.132-.848A6.022,6.022,0,0,0,12,7c-5.268-.1-8.04,6.686-4.193,10.285a1,1,0,0,1-1.4,1.43C1.287,13.848,4.939,4.915,12,5a8.035,8.035,0,0,1,7.919,6.858A1,1,0,0,1,19.07,12.99Zm.3,3.244a1,1,0,0,1-1.318.514l-4.867-2.136a2,2,0,1,1,.8-1.832l4.867,2.136A1,1,0,0,1,19.369,16.234Z",
+    "M23.9,11.437A12,12,0,0,0,4,4.052a12.055,12.055,0,0,0-.246,17.66A4.847,4.847,0,0,0,7.114,23H16.88a4.988,4.988,0,0,0,3.508-1.429A11.942,11.942,0,0,0,23.9,11.437ZM18.99,20.142A3.005,3.005,0,0,1,16.88,21H7.114a2.863,2.863,0,0,1-1.982-.741A10.045,10.045,0,0,1,5.337,5.543a10,10,0,0,1,13.653,14.6ZM20,13a7.927,7.927,0,0,1-2.409,5.715,1,1,0,1,1-1.4-1.43C20.039,13.684,17.268,6.9,12,7a6.024,6.024,0,0,0-5.939,5.142,1,1,0,0,1-1.98-.284C5.766,2.13,19.73,3.113,20,13Zm-6,0a2.013,2.013,0,0,1-3.184,1.612L5.949,16.748a1,1,0,1,1-.8-1.832l4.867-2.136A2,2,0,0,1,14,13Z",
+];
+const bgLinks = [
+    "https://www.youtube.com/channel/UCkuuvKL973p_36xk2sC9phg?sub_confirmation=1",
+    "https://open.spotify.com/playlist/2Z1e60Ts9AkBLUKVFuwjvp?si=f7f7a9dca3a7498c",
+    "https://open.spotify.com/playlist/3UbxPcawwl6FC7Q5HbKeKI?si=b2d7ce82545041fe",
+];
+
+let colors = JSON.parse(window.localStorage.getItem("color")) || ["#84E3C8", "#A8E6CF", "#DCEDC1", "#FFD3B6", "#FFAAA5", "#FF8B94", "#FF7480"];
+
+let time_seconds = JSON.parse(window.localStorage.getItem("time")) || 0;
+time_seconds =
+    time_seconds && time_seconds[1] == `${new Date().getMonth() + 1} ${new Date().getFullYear()} ${new Date().getDate()}` ? time_seconds[0] : 0;
+let time_minutes = Math.floor(time_seconds / 60);
+
+let board, game, piece, block_size, autoInterval, dropInterval, bgColor;
+let speed = 40 - Number(speedIcon.dataset.state) * 10;
+let auto_speed = 750;
+let username = window.localStorage.getItem("username");
+let startScreen = false;
+
+// event listeners
+throphy_logo.onload = () => {
+    let block = Math.floor(Math.random() * (throphy_logo.children.length - 2)) + 1;
+    throphy_logo.querySelector(`#block${block}`).style.visibility = "visible";
+};
+
+window.onload = () => {
+    // load preferences in localstorage
+    if (localStorage.getItem("sound_effects")) {
+        let old_state = Number(effectsIcon.dataset.state);
+        effectsIcon.dataset.state = localStorage.getItem("sound_effects");
+        effectsIcon.src = effectsIcon.src.replace(`${old_state}.svg`, `${effectsIcon.dataset.state}.svg`);
+        iconChangeVolume(effectsIcon);
+    }
+
+    if (localStorage.getItem("soundtrack")) {
+        let old_state = Number(trackIcon.dataset.state);
+        trackIcon.dataset.state = localStorage.getItem("soundtrack");
+        trackIcon.src = trackIcon.src.replace(`${old_state}.svg`, `${trackIcon.dataset.state}.svg`);
+    }
+
+    if (localStorage.getItem("speed")) {
+        let old_state = Number(speedIcon.dataset.state);
+        speedIcon.dataset.state = localStorage.getItem("speed");
+        speedIcon.src = speedIcon.src.replace(`${old_state}.svg`, `${speedIcon.dataset.state}.svg`);
+        speed = 40 - Number(speedIcon.dataset.state) * 10;
+    }
+
+    if (localStorage.getItem("touch_screen")) {
+        let old_state = Number(phoneIcon.dataset.state);
+        phoneIcon.dataset.state = localStorage.getItem("touch_screen");
+        phoneIcon.src = phoneIcon.src.replace(`${old_state}.svg`, `${phoneIcon.dataset.state}.svg`);
+
+        if (phoneIcon.dataset.state == 1) {
+            document.body.classList.add("touch_enabled");
+        }
+    }
+
+    if (window.localStorage.getItem("timer_enabled") == "true") {
+        document.querySelector("#timer_wrapper").classList.add("time");
+    }
+
+    soundtrack.loop = true;
+    soundtrack.volume = 0.5 * trackIcon.dataset.state;
+    endSound.volume = 0.5 * trackIcon.dataset.state;
+    bgColor = window.getComputedStyle(document.querySelector(".main_layout")).backgroundColor;
+
+    change_dimensions();
+    loadColorsPreview();
+    local_scores();
+
+    // timer
+    document.querySelector("#minutes").innerHTML = time_minutes;
+    if (document.querySelector("#timer_wrapper").classList.contains("time") && time_seconds / 60 > 30) document.body.innerHTML = "Time's up!!";
+
+    setInterval(() => {
+        if (game && !game.pause) {
+            time_seconds += 1;
+
+            if (Math.floor(time_seconds / 60) != time_minutes) {
+                time_minutes = Math.floor(time_seconds / 60);
+                document.querySelector("#minutes").innerHTML = time_minutes;
+
+                let day = `${new Date().getMonth() + 1} ${new Date().getFullYear()} ${new Date().getDate()}`;
+                window.localStorage.setItem("time", JSON.stringify([time_seconds, day]));
+
+                if (document.querySelector("#timer_wrapper").classList.contains("time") && time_seconds / 60 > 30) {
+                    document.body.innerHTML = "Time's up!!";
+                }
+            }
+        }
+    }, 1000);
+
+    // set listeners
+    window.addEventListener("resize", () => {
+        change_dimensions(true);
+
+        if (screen.availHeight > screen.availWidth) {
+            document.body.classList.add("touch_enabled");
+        } else {
+            document.body.classList.remove("touch_enabled");
+        }
+    });
+
+    let randomBgImage = Math.floor(Math.random() * bgLinks.length);
+    storedBlockCanvas.style.backgroundImage = `url(shoutout_${randomBgImage + 1}.png)`;
+
+    storedBlockCanvas.onclick = () => {
+        window.open(bgLinks[randomBgImage]);
+    };
+
+    document.addEventListener("visibilitychange", () => {
+        if (!game) return;
+
+        if (document.hidden) {
+            game.togglePause(true);
+        } else {
+            game.togglePause(false);
+        }
+    });
+
+    document.addEventListener("keydown", start_game);
+
+    usernameHTML.addEventListener("input", () => {
+        username = usernameHTML.value;
+        window.localStorage.setItem("username", username);
+    });
+
+    document.querySelector("#reset").addEventListener("click", () => {
+        local_scores(true);
+    });
+
+    document.querySelector("#optionsToggle").addEventListener("click", (e) => {
+        let currentOpacity = document.documentElement.style.getPropertyValue("--settingsOpacity");
+        document.documentElement.style.setProperty("--settingsOpacity", currentOpacity == 0 ? 1 : 0);
+    });
+
+    for (let element of document.querySelectorAll(".toggle")) {
+        element.addEventListener("click", (e) => {
+            if (element.id == "speedIcon") {
+                toggleMusicIcon(e, false);
+                let state = Number(speedIcon.dataset.state);
+                localStorage.setItem("speed", state);
+                speed = 40 - state * 10;
+                return;
+            }
+            toggleMusicIcon(e);
+        });
+    }
+
+    for (let element of document.querySelectorAll(".darktoggle")) {
+        element.addEventListener("click", (e) => {
+            document.body.classList.toggle("dark");
+
+            localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+            bgColor = window.getComputedStyle(document.querySelector(".main_layout")).backgroundColor;
+        });
+    }
+
+    const dropDownBtn = document.querySelector("#toggleDropDown");
+    dropDownBtn.addEventListener("click", () => {
+        dropDownBtn.parentElement.classList.toggle("toggled");
+    });
+
+    document.querySelector(".dropdown-options > h2").onclick = (e) => {
+        document.querySelector(".public_scores").classList.toggle("weekly");
+    };
+
+    // touchscreen icons
+    document.querySelectorAll("#touch_pause").forEach((x) => {
+        x.onclick = () => {
+            if (!game) {
+                start_game();
+                return;
+            }
+            game?.togglePause();
+        };
+    });
+
+    document.querySelector("#touch_swap").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        game?.swap_block();
+    };
+
+    document.querySelector("#touch_rotate").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        piece?.rotate();
+    };
+
+    document.querySelector("#touch_drop").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        piece?.drop();
+    };
+
+    document.querySelector("#touch_left").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        piece?.move("x;-1");
+    };
+
+    document.querySelector("#touch_right").onclick = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        piece?.move("x;1");
+    };
+
+    document.querySelector("#touch_down").onpointerdown = () => {
+        if (!game) {
+            start_game();
+            return;
+        }
+        keyDown();
+    };
+
+    document.querySelector(".editIcon").onclick = () => {
+        usernameHTML.classList.toggle("hidden");
+    };
+
+    document.querySelector("#close_shoutout").onclick = () => {
+        storedBlockCanvas.classList.remove("youtube_background");
+        storedBlockCanvas.style.backgroundImage = null;
+        document.querySelector("#close_shoutout").style.display = "none";
+    };
+
+    document.querySelector("#colorIcon").onclick = () => {
+        document.querySelector(".color_options_wrapper").classList.toggle("hidden");
+    };
+
+    document.querySelector("#closeColorsIcon").onclick = () => {
+        document.querySelector(".color_options_wrapper").classList.add("hidden");
+    };
+
+    document.querySelectorAll(".colors>div").forEach((div) => {
+        div.onmouseover = () => {
+            loadColorsPreview(div.querySelectorAll(".color"), div);
+        };
+
+        div.onclick = () => {
+            loadColorsPreview(div.querySelectorAll(".color"), div, true);
+        };
+    });
+
+    document.querySelectorAll("input.color").forEach((input) => {
+        input.oninput = () => {
+            input.style.backgroundColor = input.value;
+        };
+    });
+
+    document.querySelector("#timerIcon").onclick = () => {
+        document.querySelector("#timer_wrapper").classList.toggle("time");
+        window.localStorage.setItem("timer_enabled", document.querySelector("#timer_wrapper").classList.contains("time"));
+    };
+};
+
+// functions
+// start game
+function start_game() {
+    if (document.activeElement.id == "username") return;
+    document.removeEventListener("keydown", start_game);
+    game = new Game();
+
+    document.querySelector(".center.column").classList.add("game_started");
+    piece = new Piece();
+
+    soundtrack.currentTime = 0;
+    soundtrack.play();
+
+    gtag("event", "new_game", {
+        category: "game_event",
+        discription: "New game started!",
+    });
+}
+// canvas
+function change_dimensions(redraw = false) {
+    canvas.height = (document.querySelector("#game").clientHeight - 4) * 0.95;
+    block_size = canvas.height / rows;
+    canvas.width = block_size * cols;
+
+    if (redraw) game?.redraw();
+}
+
+// icons
+function toggleMusicIcon(click, changeVolume = true) {
+    let icon = click.target;
+    let old_state = Number(icon.dataset.state);
+
+    icon.dataset.state = old_state == icon.dataset.max ? (changeVolume ? 0 : 1) : old_state + 1;
+    icon.src = icon.src.replace(`${old_state}.svg`, `${icon.dataset.state}.svg`);
+    changeVolume ? iconChangeVolume(icon) : 0;
+
+    if (icon == phoneIcon) {
+        localStorage.setItem("touch_screen", icon.dataset.state);
+        document.body.classList.toggle("touch_enabled");
+    }
+}
+
+function iconChangeVolume(icon) {
+    let changes = Array.from(soundOptions);
+    let effectsLevel = effectsIcon.dataset.state;
+    let trackLevel = trackIcon.dataset.state;
+    localStorage.setItem("sound_effects", effectsLevel);
+    if (icon == trackIcon) {
+        localStorage.setItem("soundtrack", trackLevel);
+    }
+
+    icon.src?.includes("effects") ? changes.splice(0, 2) : 0;
+    icon.src?.includes("music") ? changes.splice(2) : 0;
+
+    for (let change of changes) {
+        let newVolume = soundOptions.indexOf(change) > 1 ? effectsLevel : trackLevel * 0.5;
+        change.volume = newVolume;
+    }
+}
+
+// scores
+const local_scores = (clear = false) => {
+    if (clear) {
+        scoresHTML.innerHTML = "<li style='list-style: none;'><i>It seems like you haven't played yet!</i></li>";
+        window.localStorage.removeItem("scores");
+        window.localStorage.removeItem("levels");
+        return;
+    }
+
+    let scores = window.localStorage.getItem("scores");
+    if (!scores) return []; // if 0 or undefined
+
+    let sortedScores = scores
+        .split(",")
+        .slice()
+        .sort((a, b) => b - a);
+
+    if (sortedScores.length >= 5) {
+        sortedScores.splice(5);
+    }
+
+    window.localStorage.setItem("scores", sortedScores);
+
+    scoresHTML.innerHTML = "";
+    let levels = {};
+    if (window.localStorage.getItem("levels")) {
+        levels = JSON.parse(window.localStorage.getItem("levels"));
+    }
+    for (let score of sortedScores) {
+        scoresHTML.innerHTML += `<li><b>level ${levels[score]}</b>: ${score}</li>`;
+    }
+
+    return sortedScores;
+};
+
+function new_score(newScore, level, final = false) {
+    document.querySelector("#score").innerHTML = newScore;
+    if (!final) return;
+
+    // document.querySelector("#finalScore").innerHTML = newScore;
+
+    if (!newScore || !level) return;
+
+    let scores = local_scores();
+    scores.push(newScore);
+
+    let levels = {};
+    if (window.localStorage.getItem("levels")) {
+        levels = JSON.parse(window.localStorage.getItem("levels"));
+    }
+
+    levels[newScore] = level;
+
+    window.localStorage.setItem("scores", scores);
+    window.localStorage.setItem("levels", JSON.stringify(levels));
+
+    local_scores();
+    gtag("event", "game_end", {
+        category: "game_event",
+        discription: "Game ended and score uploaded!",
+    });
+}
+
+function upload_highscore(score) {
+    if (score == 0 || !username) return;
+
+    const url = `${window.location.origin}/newScore`;
+    const data = { user: username, score: score, weekly: false };
+
+    fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    })
+        .then((response) => response.json())
+        .then((data) => console.log("Response data:", data))
+        .catch((error) => console.error("Error:", error));
+}
+
+// lower piece functions
+function keyDown() {
+    clearInterval(autoInterval);
+    clearInterval(dropInterval);
+
+    dropInterval = setInterval(() => {
+        if (game.pause) return;
+
+        if (game.stop) {
+            clearInterval(dropInterval);
+            return;
+        }
+
+        piece.move("y;1");
+    }, speed);
+}
+
+function keyUp(e) {
+    if (e.key == "ArrowDown") {
+        clearInterval(dropInterval);
+        dropInterval = undefined;
+        lowerAutomaticaly();
+    }
+}
+
+function lowerAutomaticaly() {
+    // lower block every 750ms
+    clearInterval(autoInterval);
+
+    autoInterval = setInterval(() => {
+        if (game.pause) return;
+
+        if (game.stop) {
+            clearInterval(autoInterval);
+            return;
+        }
+
+        piece.move("y;1");
+    }, auto_speed);
+}
+
+function loadColorsPreview(preference, parent, click = false) {
+    let colors_result = preference ? [] : colors;
+
+    if (preference) {
+        for (let color of preference) {
+            colors_result.push(color.style.backgroundColor || "grey");
+        }
+    }
+
+    document.querySelectorAll(".color_preview g").forEach((group, i) => {
+        group.style.fill = colors_result[Number(group.dataset.order)];
+    });
+
+    if (click && parent) {
+        colors = colors_result;
+        window.localStorage.setItem("color", JSON.stringify(colors));
+        document.querySelector(".selected_color").classList.remove("selected_color");
+        parent.classList.add("selected_color");
+        game?.redraw();
+    }
+}
+;/** @format */
+
+class Game {
+    constructor() {
+        document.querySelector("#game").classList.remove("over");
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
+        auto_speed = 750;
+
+        this.score = 0;
+        this.lines = 0;
+        this.level = 1;
+        this.stop = this.pause = false;
+
+        board = this.redraw(true);
+        this.drawNextBlock();
+        local_scores();
+        new_score(this.sore, this.level);
+    }
+
+    redraw(setup = false) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // draw grid
+        ctx.strokeStyle = "gray";
+        ctx.lineWidth = 1;
+
+        ctx.beginPath(false);
+
+        for (let i = 1; i < rows; i++) {
+            ctx.moveTo(block_size * i, 0);
+            ctx.lineTo(block_size * i, canvas.height);
+
+            ctx.moveTo(0, block_size * i);
+            ctx.lineTo(canvas.height, block_size * i);
+        }
+
+        ctx.stroke();
+
+        if (setup) {
+            // return 2d matrix
+            return Array.from({ length: rows }, () => Array(cols).fill(0));
+        }
+
+        // redraw blocks
+        ctx.fillStyle = colors[piece?.piece];
+
+        board.forEach((row, rowIndex) => {
+            row.forEach((x, colIndex) => {
+                if (x != 0) {
+                    ctx.fillStyle = colors[x - 3];
+                    this.drawBlock(rowIndex, colIndex, x);
+                }
+            });
+        });
+
+        ctx.fillStyle = colors[piece?.piece];
+
+        this.shadow(false);
+    }
+
+    drawBlock(col, row, value, context = ctx) {
+        if (value == 0) return;
+        context.fillRect(row * block_size + 1, col * block_size + 1, block_size - 2, block_size - 2);
+    }
+
+    drawNextBlock(shape, piece, ctx2 = nextBlockCtx, canvas2 = nextBlockCanvas) {
+        canvas2.width = canvas2.height = block_size * 5;
+        ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+
+        // draw grid
+        ctx2.strokeStyle = "gray";
+        ctx2.lineWidth = 1;
+
+        ctx2.beginPath(false);
+
+        for (let i = 1; i < 5; i++) {
+            ctx2.moveTo(block_size * i, 0);
+            ctx2.lineTo(block_size * i, canvas2.height);
+
+            ctx2.moveTo(0, block_size * i);
+            ctx2.lineTo(canvas2.height, block_size * i);
+        }
+
+        ctx2.stroke();
+
+        // draw block
+        ctx2.fillStyle = colors[piece];
+
+        for (let i in shape) {
+            let col = (i % 3) + 1;
+            let row = Math.floor(i / 3) + 1;
+            game.drawBlock(row, col, shape[i], ctx2);
+        }
+    }
+
+    isClipping(moveRow = 0, moveCol = 0, shape, width) {
+        if (!shape) shape = piece.shape;
+        if (!width) width = piece.width;
+
+        for (let i in shape) {
+            let col = (i % width) + Math.floor(cols / 2) - 2 + piece.extraX;
+            let row = Math.floor(i / width) + piece.extraY;
+
+            //if out of the board
+            if (row > rows) return true;
+            if (shape[i] != 0 && board[row][col] == undefined) return true;
+
+            //if on top of other block
+            if (row == rows || board[row][col] == 0) continue;
+            if (board[row + moveRow][col + moveCol] >= 3) return true;
+        }
+
+        return false;
+    }
+
+    validMove(move) {
+        // check if on bottom row
+        if (board[rows - 1].includes(1) && move == "y;1") {
+            piece.disable();
+            if (!this.stop) {
+                piece = new Piece();
+                game.redraw();
+            }
+            return false;
+        }
+
+        // check right
+        if (move == "x;1") {
+            let rigthRow = board.map((row) => row[cols - 1]);
+            if (rigthRow.includes(1) || this.isClipping(0, 1)) return false;
+        }
+
+        // check left
+        if (move == "x;-1") {
+            let leftRow = board.map((row) => row[0]);
+            if (leftRow.includes(1) || this.isClipping(0, -1)) return false;
+        }
+
+        // underneath
+        if (move == "y;1") {
+            for (let i in piece.shape) {
+                let col = (i % piece.width) + Math.floor(cols / 2) - 2 + piece.extraX;
+                let row = Math.floor(i / piece.width) + piece.extraY;
+
+                if (board[row][col] == 0 || board[row][col] >= 3) continue;
+
+                if (board[row + 1][col] >= 3) {
+                    piece.disable();
+                    if (!this.stop) {
+                        piece = new Piece();
+                        game.redraw();
+                    }
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    checkRows() {
+        let redraw = false;
+        let combo = 0;
+
+        board.map((row, i) => {
+            if (!row.includes(0) && !row.includes(1) && !row.includes(2)) {
+                combo += 1;
+                redraw = true;
+
+                // lower everything (remove row & put new row on top)
+                clearSound.currentTime = 0;
+                clearSound.play();
+                board.splice(i, 1);
+                board.splice(0, 0, new Array(cols).fill(0));
+            }
+        });
+
+        if (combo == 1) {
+            this.score += 40;
+        } else if (combo == 2) {
+            this.score += 100;
+        } else if (combo == 3) {
+            this.score += 300;
+        } else if (combo == 4) {
+            this.score += 1200;
+        }
+
+        this.lines += combo;
+        document.querySelector("#lines").innerHTML = this.lines;
+
+        if (this.lines >= this.level * 5) {
+            this.level += 1;
+            this.lines = 0;
+            document.querySelector("#level").innerHTML = this.level;
+            auto_speed -= this.level > 5 ? 50 : 100;
+        }
+
+        new_score(this.score, this.level);
+        if (redraw) this.redraw();
+    }
+
+    togglePause(setPause = undefined) {
+        if (setPause != undefined) {
+            this.pause = setPause;
+        } else {
+            this.pause = !this.pause;
+        }
+
+        // pause screen & music
+        if (this.pause) {
+            document.querySelector(".center.column").classList.remove("game_started");
+            soundtrack.pause();
+        } else {
+            document.querySelector(".center.column").classList.add("game_started");
+            soundtrack.play();
+        }
+    }
+
+    shadow(redraw = true, block = piece) {
+        if (redraw) this.redraw();
+        const shape = block.shape;
+
+        const result = (() => {
+            let oldRow;
+
+            for (let row = piece?.extraY ? piece.extraY : 0; row < rows; row++) {
+                // check if valid move
+                let clipping = (() => {
+                    for (let i in shape) {
+                        if (shape[i] == 0) continue;
+                        let col = (i % block.width) + Math.floor(cols / 2) - 2 + block.extraX;
+                        let rowResult = Math.floor(i / block.width) + row;
+
+                        // out of the board or on top of other block
+                        if (board[rowResult] == undefined) return true;
+                        if (board[rowResult][col] > 2) return true;
+                    }
+
+                    return false;
+                })();
+
+                if (clipping) return oldRow ? oldRow : row;
+                oldRow = row;
+            }
+        })();
+
+        // fill blocks
+        ctx.strokeStyle = colors[block.piece];
+        ctx.lineWidth = 3;
+
+        for (let i in shape) {
+            let col = (i % block.width) + Math.floor(cols / 2) - 2 + block.extraX;
+            let row = result + Math.floor(i / block.width);
+
+            if (shape[i] > 0 && row < rows) {
+                ctx.strokeRect(col * block_size + 1, row * block_size + 1, block_size - 2, block_size - 2);
+            }
+        }
+    }
+
+    swap_block() {
+        let old_stored_piece = this.stored_piece;
+        let old_shape = piece.shape;
+
+        // store current shape
+        this.stored_piece = piece.piece;
+
+        // check if valid move
+        if (this.isClipping(0, 0, shapes[shapeTypes[this.stored_piece]], 3)) return;
+        this.drawNextBlock(shapes[shapeTypes[this.stored_piece]], this.stored_piece, storedBlockCtx, storedBlockCanvas);
+
+        // remove current/old block = clear trail
+        piece.placeBlock(false, true, old_shape);
+
+        // draw new stored shape
+        if (storedBlockCanvas.classList.contains("youtube_background")) {
+            storedBlockCanvas.classList.remove("youtube_background");
+            storedBlockCanvas.style.backgroundImage = null;
+            document.querySelector("#close_shoutout").style.display = "none";
+        }
+
+        if (old_stored_piece == undefined) {
+            piece.placeBlock();
+            return;
+        }
+
+        piece.piece = old_stored_piece;
+        piece.shape = shapes[shapeTypes[old_stored_piece]];
+        piece.width = 3;
+        this.redraw();
+        piece.placeBlock();
+    }
+
+    end() {
+        this.togglePause();
+        this.stop = true;
+
+        new_score(this.score, this.level, true);
+        document.querySelector("#game").classList.add("over");
+
+        console.log("game over");
+
+        // sound
+        soundtrack.pause();
+        soundtrack.currentTime = 0;
+        endSound.play();
+
+        // abality to restart
+        startScreen = false;
+        document.querySelector(".center.column").classList.remove("game_started");
+        document.addEventListener("keydown", start_game);
+
+        // sent new highscore to server
+        upload_highscore(this.score);
+    }
+}
+;/** @format */
+
+const shapes = {
+    I: [0, 1, 0, 0, 2, 0, 0, 1, 0, 0, 1, 0],
+    J: [0, 1, 0, 0, 2, 0, 1, 1, 0],
+    L: [0, 1, 0, 0, 2, 0, 0, 1, 1],
+    O: [0, 0, 0, 0, 2, 1, 0, 1, 1],
+    S: [0, 0, 0, 0, 2, 1, 1, 1, 0],
+    T: [0, 0, 0, 1, 2, 1, 0, 1, 0],
+    Z: [0, 0, 0, 1, 2, 0, 0, 1, 1],
+};
+const shapeTypes = Object.keys(shapes);
+let nextPiece = Math.floor(Math.random() * shapeTypes.length);
+
+class Piece {
+    constructor() {
+        this.width = 3;
+
+        // x & y cordinates
+        this.extraY = this.extraX = this.mostRight = 0;
+        this.placeBlock(true);
+
+        // add key control
+        document.addEventListener("keydown", this.keyPress);
+        document.addEventListener("keyup", keyUp);
+        lowerAutomaticaly();
+    }
+
+    disable(end = false) {
+        document.removeEventListener("keydown", this.keyPress);
+        document.addEventListener("keyup", keyUp);
+        clearInterval(autoInterval);
+        clearInterval(dropInterval);
+
+        this.shape = this.shape.map((x) => {
+            if (x != 0) {
+                return 3 + this.piece; // + extra for color
+            }
+
+            return 0;
+        });
+
+        if (end) {
+            game.end();
+            return;
+        }
+
+        dropSound.currentTime = 0;
+        dropSound.play();
+        this.placeBlock();
+        game.redraw();
+    }
+
+    placeBlock(newBlock = false, clearTrail = false, shape = this.shape) {
+        // shape
+        if (newBlock) {
+            this.piece = nextPiece;
+            this.shape = shapes[shapeTypes[this.piece]];
+            shape = this.shape;
+            this.nextBlock();
+
+            this.color = colors[this.piece];
+
+            // change logo colors
+            document.documentElement.style.setProperty("--colorGradientStart", colors[this.piece]);
+            document.documentElement.style.setProperty("--colorGradientEnd", colors[this.piece]);
+        }
+
+        // color
+        ctx.fillStyle = clearTrail ? bgColor : colors[this.piece];
+
+        // fill blocks
+        for (let i in shape) {
+            let col = (i % this.width) + Math.floor(cols / 2) - 2 + this.extraX;
+            let row = Math.floor(i / this.width) + this.extraY;
+
+            if (shape[i] != 0) {
+                // check if taken
+                if (newBlock && board[row][col] > 2) {
+                    this.disable(true);
+                    return;
+                }
+
+                // change matrix & visual board
+                board[row][col] = clearTrail ? 0 : shape[i];
+                game.drawBlock(row, col, shape[i]);
+            }
+        }
+
+        // check for full rows
+        game.checkRows();
+        if (newBlock) game.shadow(false, this);
+    }
+
+    nextBlock() {
+        nextPiece = Math.floor(Math.random() * shapeTypes.length);
+        this.nextShape = shapes[shapeTypes[nextPiece]];
+        game.drawNextBlock(this.nextShape, nextPiece);
+    }
+
+    rotate() {
+        // O shape
+        if (this.piece == 3) return;
+
+        // long I shape
+        if (this.piece == 0) {
+            this.rotated = this.rotated ? !this.rotated : true;
+
+            if (this.rotated) {
+                if (game.isClipping(0, 0, [0, 0, 0, 0, 1, 2, 1, 1, 0, 0, 0, 0], 4)) return;
+
+                this.placeBlock(false, true);
+                this.shape = [0, 0, 0, 0, 1, 2, 1, 1, 0, 0, 0, 0];
+                this.width = 4;
+            } else {
+                if (game.isClipping(0, 0, shapes[shapeTypes[this.piece]], 3)) return;
+
+                this.placeBlock(false, true);
+                this.shape = shapes[shapeTypes[this.piece]];
+                this.width = 3;
+            }
+
+            this.placeBlock();
+            rotateSound.currentTime = 0;
+            rotateSound.play();
+            game.shadow();
+            return;
+        }
+
+        // convert to 2d shape (matrix)
+        let matrix = Array.from({ length: Math.floor(this.shape.length / 3) }, (x, i) => this.shape.slice(i * 3, (i + 1) * 3));
+
+        // turn counterclockwise, then reverse rows
+        let transformed = matrix.map((_, colIndex) => matrix.map((row) => row[colIndex]));
+        let newShape = transformed.map((row) => row.reverse()).flat();
+
+        if (game.isClipping(0, 0, newShape)) return;
+        this.placeBlock(false, true);
+        this.shape = newShape;
+
+        // redraw
+        rotateSound.currentTime = 0;
+        this.placeBlock();
+        rotateSound.play();
+        game.shadow();
+    }
+
+    drop() {
+        let succes = this.move("y;1");
+
+        while (succes) {
+            succes = this.move("y;1");
+        }
+    }
+
+    move(query) {
+        //query = (x;-1), (x;1), (y;-1)
+        let [axis, extra] = query.split(";");
+        if (!axis || !extra) return false;
+
+        if (!game.validMove(query)) return false;
+
+        // clear trail
+        this.placeBlock(false, true);
+
+        // change x and y cords
+        axis == "y" ? (this.extraY += Number(extra)) : ((this.extraX += Number(extra)), game.shadow());
+
+        // move block
+        this.placeBlock();
+        return true;
+    }
+
+    keyPress(e) {
+        if (game.pause) {
+            game.togglePause();
+            return;
+        }
+
+        let key = e.key;
+        key == "Escape" || key == "p" ? game.togglePause() : 0;
+        key == "s" || key == "Control" ? game.swap_block() : 0;
+        if (game.stop || game.pause) return;
+
+        key == "ArrowUp" ? piece.rotate() : 0;
+        key == "ArrowLeft" ? piece.move("x;-1") : 0;
+        key == "ArrowRight" ? piece.move("x;1") : 0;
+        key == "ArrowDown" ? keyDown() : 0;
+        key == " " ? piece.drop() : 0;
+    }
+}
